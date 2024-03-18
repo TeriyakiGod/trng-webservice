@@ -5,4 +5,4 @@
 *.pot
 *.pyc
 __pycache__
-random_numbers.txt
+random_numbers*
