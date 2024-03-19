@@ -1,30 +1,17 @@
+import random
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from trng.interface import rng
+from . import rand
 
-
-def rand_int_range(range):
-    # Debiased Integer Multiplication — Lemire's Method
-    t = (-range) % range
-    while True:
-        x = rng()
-        m = x * range
-        l = m & 0xFFFFFFFF
-        if l >= t:
-            break
-    return m >> 32
-
-class RandomNumberView(APIView):
-    
+class RandomIntView(APIView):
     def get(self, request):
         n = int(request.query_params.get('n', 1))
-        a = int(request.query_params.get('a', 0))
-        b = int(request.query_params.get('b', 100))
-
-        # Get the random numbers from the buffer
-        random_numbers = []
-        for _ in range(n):
-            random_number = rand_int_range(b - a) + a
-            random_numbers.append(random_number)
-
-        return Response(random_numbers)
+        min = int(request.query_params.get('min', 0))
+        max = int(request.query_params.get('max', 100))
+        return Response(rand.get_int(n, min, max))
+    
+class RandomFloatView(APIView):
+    def get(self, request):
+        n = int(request.query_params.get('n', 1))
+        precision = int(request.query_params.get('precision', 2))
+        return Response(rand.get_float(n, precision))
