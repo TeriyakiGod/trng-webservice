@@ -13,5 +13,12 @@ class RandomIntView(APIView):
 class RandomFloatView(APIView):
     def get(self, request):
         n = int(request.query_params.get('n', 1))
-        precision = int(request.query_params.get('precision', 2))
-        return Response(rand.get_float(n, precision))
+        p = int(request.query_params.get('precision', 2))
+        return Response(rand.get_float(n, p))
+    
+class RandomBytesView(APIView):
+    def get(self, request):
+        n = int(request.query_params.get('n', 4))
+        f = str(request.query_params.get('format', 'h'))
+        return Response(rand.get_bytes(n, f))
+        

@@ -1,9 +1,10 @@
+from ctypes import c_uint32
 import struct
 import collections
 from channels.generic.websocket import WebsocketConsumer
 
 class TrngConsumer(WebsocketConsumer):
-    buffer: collections.deque[int] = collections.deque(maxlen=1000)
+    buffer: collections.deque[c_uint32] = collections.deque(maxlen=1000)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,7 +18,7 @@ class TrngConsumer(WebsocketConsumer):
     def receive(self, bytes_data: bytes):
         if bytes_data:
             # Convert bytes to unsigned int
-            random_number = int.from_bytes(bytes_data, byteorder='little', signed=False)
+            random_number: c_uint32 = struct.unpack('<I', bytes_data)[0]
             # Add the random number to the buffer
             TrngConsumer.buffer.appendleft(random_number)
         else:

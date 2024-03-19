@@ -62,7 +62,6 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = 'webservice.asgi.application'
-WSGI_APPLICATION = 'webservice.wsgi.application'
 
 
 # Database
