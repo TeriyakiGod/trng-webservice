@@ -26,9 +26,10 @@ def random_to_float(precision: int) -> float:
 def random_to_bytes(n: int) -> bytes:
     byte_array = bytearray()
     for _ in range(n // 4):
-        byte_array.extend(rng().to_bytes(4, 'big'))
+        byte_array.extend(rng().to_bytes(4)) # TODO: Check if little or big endian
     if n % 4 != 0:
-        byte_array.extend(rng().to_bytes(n % 4, 'big'))
+        b = rng().to_bytes(4)
+        byte_array.extend(b[:n % 4])
     return bytes(byte_array)
 
 def get_int(n: int, min: int, max: int) -> list[int]:
@@ -37,10 +38,25 @@ def get_int(n: int, min: int, max: int) -> list[int]:
 def get_float(n: int, precision: int) -> list[float]:
     return [random_to_float(precision) for _ in range(n)]
 
+# Return a list of strings representing the bytes in the format specified
 def get_bytes(n: int, f: str) -> list[str]:
     match f:
+        # Hexadecimal
         case 'h':
             return [b.to_bytes(1,"big").hex() for b in bytearray(random_to_bytes(n))]
+        
+        # Octal
+        case 'o':
+            return [format(b, '03o') for b in bytearray(random_to_bytes(n))]
+        
+        # Binary
+        case 'b':
+            return [format(b, '08b') for b in bytearray(random_to_bytes(n))]
+        
+        # Decimal
+        case 'd':
+            return [str(b) for b in bytearray(random_to_bytes(n))]
+            
         case default:
             return [b.to_bytes(1,"big").hex() for b in bytearray(random_to_bytes(n))]
             
