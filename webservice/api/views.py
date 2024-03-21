@@ -1,40 +1,99 @@
-from rest_framework.views import APIView
+import asyncio
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from asgiref.sync import async_to_sync
 from . import rand
+from datetime import datetime
 
-class RandomIntView(APIView):
-    def get(self, request):
-        n = int(request.query_params.get('n', 1))
-        if n <= 0:
-            return Response({"error": "Invalid n. Must be greater than 0"}, status=400)
-        if n > 1024:
-            return Response({"error": "Invalid n. Must be less than or equal to 1024"}, status=400)
-        min = int(request.query_params.get('min', 0))
+## @brief This view returns a json object with a list of random integers and a timestamp.
+# @param request HTTP request object.
+# @return HTTP response object with either a list of random integers or an error message.
+@api_view(['GET'])
+def get_rand_int(request):
+    data = None
+    status = 200
+
+    n = int(request.query_params.get('n', 1))
+    if n <= 0:
+        data = {"error": "Invalid n. Must be greater than 0"}
+        status = 400
+    elif n > 10000:
+        data = {"error": "Invalid n. Must be less than or equal to 10000"}
+        status = 400
+    else:
+        min = int(request.query_params.get('min', 0)) # TODO: Determine the possible range
         max = int(request.query_params.get('max', 100))
-        return Response(rand.get_int(n, min, max))
-    
-class RandomFloatView(APIView):
-    def get(self, request):
-        n = int(request.query_params.get('n', 1))
-        if n <= 0:
-            return Response({"error": "Invalid n. Must be greater than 0"}, status=400)
-        if n > 1024:
-            return Response({"error": "Invalid n. Must be less than or equal to 1024"}, status=400)
+        try:
+            values = async_to_sync(rand.get_int)(n, min, max)
+        except asyncio.TimeoutError:
+            data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+            status = 503
+        timestamp = datetime.now().isoformat()
+        data = {"values": values, "timestamp": timestamp}
+
+    return Response(data, status=status)
+
+## @brief This view returns a json object with a list of random floats and a timestamp.
+# @param request HTTP request object.
+# @return HTTP response object with either a list of random floats or an error message.
+@api_view(['GET'])
+def get_rand_float(request):
+    data = None
+    status = 200
+
+    n = int(request.query_params.get('n', 1))
+    if n <= 0:
+        data = {"error": "Invalid n. Must be greater than 0"}
+        status = 400
+    elif n > 1024:
+        data = {"error": "Invalid n. Must be less than or equal to 1024"}
+        status = 400
+    else:
         p = int(request.query_params.get('precision', 2))
-        return Response(rand.get_float(n, p))
-    
-class RandomBytesView(APIView):
-    def get(self, request):
-        n = int(request.query_params.get('n', 4))
-        if n <= 0:
-            return Response({"error": "Invalid n. Must be greater than 0"}, status=400)
-        if n > 1024:
-            return Response({"error": "Invalid n. Must be less than or equal to 1024"}, status=400)
+        if p < 1:
+            data = {"error": "Invalid precision. Must be greater than or equal to 1"}
+            status = 400
+        elif p > 10:
+            data = {"error": "Invalid precision. Must be less than or equal to 15"}
+            status = 400
+        else:
+            try:
+                values = async_to_sync(rand.get_float)(n, p)
+            except asyncio.TimeoutError:
+                data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+                status = 503
+            timestamp = datetime.now().isoformat()
+            data = {"values": values, "timestamp": timestamp}
+
+    return Response(data, status=status)
+
+## @brief This view returns a list of strings representing bytes in a given format.
+# @param request HTTP request object.
+# @return HTTP response object with either a list of strings representing bytes or an error message.
+@api_view(['GET'])
+def get_rand_bytes(request):
+    data = None
+    status = 200
+
+    n = int(request.query_params.get('n', 4))
+    if n <= 0:
+        data = {"error": "Invalid n. Must be greater than 0"}
+        status = 400
+    elif n > 1024:
+        data = {"error": "Invalid n. Must be less than or equal to 1024"}
+        status = 400
+    else:
         f = str(request.query_params.get('f', 'h'))
-        if f not in ['h', 'o', 'b', 'd']:
-            return Response({"error": "Invalid format. Must be one of ['h', 'o', 'b', 'd']"}, status=400)
-        return Response(rand.get_bytes(n, f))
-    
-class TestView(APIView):
-    def get(self, request):
-        return Response({"message": "Hello, world!"})
+        if f not in ['h', 'o', 'b', 'd', '']:
+            data = {"error": "Invalid format. Must be one of ['h', 'o', 'b', 'd', '']"}
+            status = 400
+        else:
+            try:
+                values = async_to_sync(rand.get_bytes)(n, f)
+            except asyncio.TimeoutError:
+                data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+                status = 503
+            timestamp = datetime.now().isoformat()
+            data = {"values": values, "timestamp": timestamp}
+
+    return Response(data, status=status)

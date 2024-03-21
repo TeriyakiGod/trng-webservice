@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import RandomIntView, RandomFloatView, RandomBytesView, TestView
+from . import views
 
 urlpatterns = [
-    path('rand/int', RandomIntView.as_view(), name='rand_int'),
-    path('rand/float', RandomFloatView.as_view(), name='rand_float'),
-    path('rand/bytes', RandomBytesView.as_view(), name='rand_bytes'),
-    path('test', TestView.as_view(), name='test'),
+    path('rand/int', views.get_rand_int, name='rand_int'),
+    path('rand/float', views.get_rand_float, name='rand_float'),
+    path('rand/bytes', views.get_rand_bytes, name='rand_bytes'),
 ]

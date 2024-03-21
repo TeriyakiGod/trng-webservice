@@ -2,9 +2,10 @@ from ctypes import c_uint32
 import struct
 import collections
 from channels.generic.websocket import WebsocketConsumer
+from . import logger
 
 class TrngConsumer(WebsocketConsumer):
-    buffer: collections.deque[c_uint32] = collections.deque(maxlen=1000)
+    buffer: collections.deque[c_uint32] = collections.deque(maxlen=100000)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,4 +23,4 @@ class TrngConsumer(WebsocketConsumer):
             # Add the random number to the buffer
             TrngConsumer.buffer.appendleft(random_number)
         else:
-            print("Received empty data.")
+            logger.warning("Did not receive any bytes_data. Ignoring.")
