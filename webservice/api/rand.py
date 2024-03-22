@@ -82,7 +82,7 @@ async def get_bytes(n: int, f: str) -> list[str]:
 #  @param letters Whether to include letters in the string.
 #  @param special Whether to include special characters in the string.
 #  @return A random string of the given length.            
-async def get_string(n: int, digits: bool, letters: bool, special) -> str:
+async def get_string(n: int, digits: bool, letters: bool, special, repeat: bool) -> str:
     # Define the character sets
     # All characters: 33 - 126
     # Digits: 48 - 57
@@ -98,5 +98,8 @@ async def get_string(n: int, digits: bool, letters: bool, special) -> str:
         char_list += letter_list
     if special:
         char_list += special_list
-    return ''.join([char_list[await random_to_int(len(char_list))] for _ in range(n)])
+    if repeat:
+        return ''.join([char_list[await random_to_int(len(char_list))] for _ in range(n)])
+    else:
+        return ''.join([char_list.pop(await random_to_int(len(char_list))) for _ in range(n)])
         

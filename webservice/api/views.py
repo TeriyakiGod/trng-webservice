@@ -1,4 +1,5 @@
 import asyncio
+from numpy import repeat
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from asgiref.sync import async_to_sync
@@ -111,12 +112,17 @@ def get_rand_string(request):
         digits = request.query_params.get('digits', 'True') != 'False'
         letters = request.query_params.get('letters', 'True') != 'False'
         special = request.query_params.get('special', 'True') != 'False'
+        repeat = request.query_params.get('repeat', 'True') != 'False'
+        limit = (52 if letters else 0) + (10 if digits else 0) + (33 if special else 0)
         if not digits and not letters and not special:
             data = {"error": "Invalid parameters. At least one of digits, letters, or special must be true."}
             status = 400
+        elif not repeat and n > limit:
+            data = {"error": "Invalid parameters. n must be less than or equal to" + str(limit) + "with those options, when repeat is false."}
+            status = 400
         else:
             try:
-                values = async_to_sync(rand.get_string)(n, digits, letters, special)
+                values = async_to_sync(rand.get_string)(n, digits, letters, special, repeat)
             except asyncio.TimeoutError:
                 data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
                 status = 503
