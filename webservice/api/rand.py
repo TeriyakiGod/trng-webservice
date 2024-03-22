@@ -3,6 +3,9 @@
 # It uses the trng interface to get random numbers from the hardware random number generator.
 # It also provides functions to convert the random numbers to integers, floats, and byte arrays.
 
+import re
+
+from numpy import char
 from trng.interface import rng
 from typing import Final
 
@@ -39,6 +42,10 @@ async def random_to_bytes(n: int) -> bytes:
     for _ in range(n):
         byte_array.append(await random_to_int(256))
     return bytes(byte_array)
+
+async def random_to_char(min: int,max: int) -> str:
+    return chr(await random_to_int(max-min)+min)
+    
 
 ## @brief This function generates a list of random integers within a given range.
 #  @param n The number of integers to generate.
@@ -77,3 +84,27 @@ async def get_bytes(n: int, f: str) -> list[str]:
         case default:
             return [format(b, '02x') for b in bytearray(await random_to_bytes(n))]
             
+## @brief This function generates a random string of a given length.
+#  @param n The length of the string to generate.
+#  @param digits Whether to include digits in the string.
+#  @param letters Whether to include letters in the string.
+#  @param special Whether to include special characters in the string.
+#  @return A random string of the given length.            
+async def get_string(n: int, digits: bool, letters: bool, special) -> str:
+    # Define the character sets
+    # All characters: 33 - 126
+    # Digits: 48 - 57
+    # Letters: 65 - 90, 97 - 122
+    # Special characters: 33 - 47, 58 - 64, 91 - 96, 123 - 126
+    digit_list = [chr(i) for i in range(48, 58)]
+    letter_list = [chr(i) for i in range(65, 91)] + [chr(i) for i in range(97, 123)]
+    special_list = [chr(i) for i in range(33,47)] + [chr(i) for i in range(58,65)] + [chr(i) for i in range(91,97)] + [chr(i) for i in range(123,127)]
+    char_list = []
+    if digits:
+        char_list += digit_list
+    if letters:
+        char_list += letter_list
+    if special:
+        char_list += special_list
+    return ''.join([char_list[await random_to_int(len(char_list))] for _ in range(n)])
+        

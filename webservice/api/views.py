@@ -30,7 +30,6 @@ def get_rand_int(request):
             status = 503
         timestamp = datetime.now().isoformat()
         data = {"values": values, "timestamp": timestamp}
-
     return Response(data, status=status)
 
 ## @brief This view returns a json object with a list of random floats and a timestamp.
@@ -64,7 +63,6 @@ def get_rand_float(request):
                 status = 503
             timestamp = datetime.now().isoformat()
             data = {"values": values, "timestamp": timestamp}
-
     return Response(data, status=status)
 
 ## @brief This view returns a list of strings representing bytes in a given format.
@@ -95,5 +93,34 @@ def get_rand_bytes(request):
                 status = 503
             timestamp = datetime.now().isoformat()
             data = {"values": values, "timestamp": timestamp}
-
     return Response(data, status=status)
+
+@api_view(['GET'])
+def get_rand_string(request):
+    data = None
+    status = 200
+
+    n = int(request.query_params.get('n', 4))
+    if n <= 0:
+        data = {"error": "Invalid n. Must be greater than 0"}
+        status = 400
+    elif n > 1024:
+        data = {"error": "Invalid n. Must be less than or equal to 1024"}
+        status = 400
+    else:
+        digits = request.query_params.get('digits', 'True') != 'False'
+        letters = request.query_params.get('letters', 'True') != 'False'
+        special = request.query_params.get('special', 'True') != 'False'
+        if not digits and not letters and not special:
+            data = {"error": "Invalid parameters. At least one of digits, letters, or special must be true."}
+            status = 400
+        else:
+            try:
+                values = async_to_sync(rand.get_string)(n, digits, letters, special)
+            except asyncio.TimeoutError:
+                data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+                status = 503
+            timestamp = datetime.now().isoformat()
+            data = {"values": values, "timestamp": timestamp}
+    return Response(data, status=status)
+        
