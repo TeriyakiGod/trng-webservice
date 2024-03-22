@@ -1,11 +1,3 @@
-## @package rand
-# This module provides functions to generate random numbers and byte arrays.
-# It uses the trng interface to get random numbers from the hardware random number generator.
-# It also provides functions to convert the random numbers to integers, floats, and byte arrays.
-
-import re
-
-from numpy import char
 from trng.interface import rng
 from typing import Final
 

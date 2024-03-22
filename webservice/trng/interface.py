@@ -1,6 +1,3 @@
-## @package interface
-# This module provides an interface to the numbers from hardware random number generator (TRNG) using a websocket connection.
-
 from .consumers import TrngConsumer
 import asyncio
 
