@@ -1,7 +1,7 @@
 import asyncio
-from numpy import repeat
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.request import Request
 from asgiref.sync import async_to_sync
 from . import rand
 from datetime import datetime
@@ -10,7 +10,7 @@ from datetime import datetime
 # @param request HTTP request object.
 # @return HTTP response object with either a list of random integers or an error message.
 @api_view(['GET'])
-def get_rand_int(request):
+def get_rand_int(request: Request):
     data = None
     status = 200
 
@@ -24,20 +24,27 @@ def get_rand_int(request):
     else:
         min = int(request.query_params.get('min', 0)) # TODO: Determine the possible range
         max = int(request.query_params.get('max', 100))
-        try:
-            values = async_to_sync(rand.get_int)(n, min, max)
-        except asyncio.TimeoutError:
-            data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
-            status = 503
-        timestamp = datetime.now().isoformat()
-        data = {"values": values, "timestamp": timestamp}
+        if min > max:
+            data = {"error": "Invalid parameters. min must be less than or equal to max."}
+            status = 400
+        elif min > 1000000000 or max > 1000000000 or min < -1000000000 or max < -1000000000:
+            data = {"error": "Invalid parameters. min and max must be between -1000000000 and 1000000000."}
+            status = 400
+        else:
+            try:
+                values = async_to_sync(rand.get_int)(n, min, max)
+            except asyncio.TimeoutError:
+                data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+                status = 503
+            timestamp = datetime.now().isoformat()
+            data = {"values": values, "timestamp": timestamp}
     return Response(data, status=status)
 
 ## @brief This view returns a json object with a list of random floats and a timestamp.
 # @param request HTTP request object.
 # @return HTTP response object with either a list of random floats or an error message.
 @api_view(['GET'])
-def get_rand_float(request):
+def get_rand_float(request: Request):
     data = None
     status = 200
 
@@ -70,7 +77,7 @@ def get_rand_float(request):
 # @param request HTTP request object.
 # @return HTTP response object with either a list of strings representing bytes or an error message.
 @api_view(['GET'])
-def get_rand_bytes(request):
+def get_rand_bytes(request: Request):
     data = None
     status = 200
 
@@ -97,7 +104,7 @@ def get_rand_bytes(request):
     return Response(data, status=status)
 
 @api_view(['GET'])
-def get_rand_string(request):
+def get_rand_string(request: Request):
     data = None
     status = 200
 
@@ -130,3 +137,25 @@ def get_rand_string(request):
             data = {"values": values, "timestamp": timestamp}
     return Response(data, status=status)
         
+@api_view(['GET'])
+def get_rand_sequence(request: Request):
+    data = None
+    status = 200
+
+    min = int(request.query_params.get('min', 0))
+    max = int(request.query_params.get('max', 100))
+    if min > max:
+        data = {"error": "Invalid parameters. min must be less than or equal to max."}
+        status = 400
+    elif min > 1000000000 or max > 1000000000 or min < -1000000000 or max < -1000000000:
+        data = {"error": "Invalid parameters. min and max must be between -1000000000 and 1000000000."}
+        status = 400
+    else:
+        try:
+            values = async_to_sync(rand.get_sequence)(min, max)
+        except asyncio.TimeoutError:
+            data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+            status = 503
+        timestamp = datetime.now().isoformat()
+        data = {"values": values, "timestamp": timestamp}
+    return Response(data, status=status)

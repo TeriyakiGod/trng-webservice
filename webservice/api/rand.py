@@ -103,3 +103,15 @@ async def get_string(n: int, digits: bool, letters: bool, special, repeat: bool)
     else:
         return ''.join([char_list.pop(await random_to_int(len(char_list))) for _ in range(n)])
         
+## @brief This function generates a list of integers within a given range in random order.
+#  @param min The minimum value of the range.
+#  @param max The maximum value of the range.
+#  @return A list of integers from min to max in random order.
+async def get_sequence(min: int, max: int) -> list[int]:
+    sequence = [i for i in range(min, max+1)]
+    for i in range(len(sequence)):
+        j = await random_to_int(len(sequence))
+        sequence[i], sequence[j] = sequence[j], sequence[i]
+    return sequence
+        
+    
