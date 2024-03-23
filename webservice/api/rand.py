@@ -35,10 +35,6 @@ async def random_to_bytes(n: int) -> bytes:
         byte_array.append(await random_to_int(256))
     return bytes(byte_array)
 
-async def random_to_char(min: int,max: int) -> str:
-    return chr(await random_to_int(max-min)+min)
-    
-
 ## @brief This function generates a list of random integers within a given range.
 #  @param n The number of integers to generate.
 #  @param min The minimum value of the range.
@@ -103,7 +99,7 @@ async def get_string(n: int, digits: bool, letters: bool, special, repeat: bool)
     else:
         return ''.join([char_list.pop(await random_to_int(len(char_list))) for _ in range(n)])
         
-## @brief This function generates a list of integers within a given range in random order.
+## @brief This function generates a list of integers between min and max in random order.
 #  @param min The minimum value of the range.
 #  @param max The maximum value of the range.
 #  @return A list of integers from min to max in random order.
@@ -114,4 +110,15 @@ async def get_sequence(min: int, max: int) -> list[int]:
         sequence[i], sequence[j] = sequence[j], sequence[i]
     return sequence
         
-    
+## @brief This function generates a list of n random coin flips (represented as strings).
+#  @param n The number of coin flips to generate.
+#  @return A list of strings representing coin flips.
+async def get_coin_flips(n: int) -> list[str]:
+    return ['Obverse' if await random_to_int(2) == 0 else 'Reverse' for _ in range(n)]
+
+## @brief This function generates a list of n random dice rolls with m sides.
+#  @param n The number of dice rolls to generate.
+#  @param m The number of sides on the dice.
+#  @return A list of n random dice rolls with m sides.
+async def get_dice_rolls(n: int, m: int) -> list[int]:
+    return [await random_to_int(m) + 1 for _ in range(n)]
