@@ -39,10 +39,19 @@ async def random_to_bytes(n: int) -> bytes:
 #  @param n The number of integers to generate.
 #  @param min The minimum value of the range.
 #  @param max The maximum value of the range.
+#  @param repeat Whether to allow repeated values in the list. If True the n has to be less than the length of the range.
 #  @return A list of random integers within the given range.
-async def get_int(n: int, min: int, max: int) -> list[int]:
-    return [await random_to_int((max+1) - min) + min for _ in range(n)]
-
+async def get_int(n: int, min: int, max: int, repeat: bool = True) -> list[int]:
+    if repeat:
+        return [await random_to_int((max+1) - min) + min for _ in range(n)]
+    else:
+        if n > (max - min + 1):
+            raise ValueError('The number of integers to generate must be less than the length of the range.')
+        seq = [i for i in range(min, max+1)]
+        return [seq.pop(await random_to_int(len(seq))) for _ in range(n)]
+        
+    
+    
 ## @brief This function generates a list of random floats with a given precision.
 #  @param n The number of floats to generate.
 #  @param precision The precision of the generated floats.
@@ -122,3 +131,7 @@ async def get_coin_flips(n: int) -> list[str]:
 #  @return A list of n random dice rolls with m sides.
 async def get_dice_rolls(n: int, m: int) -> list[int]:
     return [await random_to_int(m) + 1 for _ in range(n)]
+
+
+async def get_lotto(n: int) -> list[list[int]]:
+        return [await get_int(6, 1, 49, False) for _ in range(n)]
