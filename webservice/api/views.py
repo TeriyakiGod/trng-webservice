@@ -5,10 +5,43 @@ from rest_framework.request import Request
 from asgiref.sync import async_to_sync
 from . import rand
 from datetime import datetime
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
+from . import serializers
 
 ## @brief This view returns a json object with a list of random integers and a timestamp.
 # @param request HTTP request object.
 # @return HTTP response object with either a list of random integers or an error message.
+@extend_schema(
+    description="This view returns a json object with a list of random integers and a timestamp.",
+    request=serializers.RandomIntSerializer,
+    responses={200: serializers.RandomIntSerializer,
+               400: serializers.ErrorSerializer,
+               503: serializers.ErrorSerializer},
+    parameters=[
+        OpenApiParameter(
+            name='min',
+            description='The minimum value',
+            required=False,
+            type=OpenApiTypes.INT,
+            location=OpenApiParameter.QUERY
+        ),
+        OpenApiParameter(
+            name='max',
+            description='The maximum value',
+            required=False,
+            type=OpenApiTypes.INT,
+            location=OpenApiParameter.QUERY
+        ),
+        OpenApiParameter(
+            name='n',
+            description='The number of random integers to generate',
+            required=False,
+            type=OpenApiTypes.INT,
+            location=OpenApiParameter.QUERY
+        ),
+    ],
+    )
 @api_view(['GET'])
 def get_rand_int(request: Request):
     data = None

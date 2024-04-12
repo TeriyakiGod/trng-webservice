@@ -1,3 +1,4 @@
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from django.urls import path
 from . import views
 
@@ -9,5 +10,7 @@ urlpatterns = [
     path('rand/sequence', views.get_rand_sequence, name='rand_sequence'),
     path('rand/coin', views.get_rand_coin, name='rand_coin'),
     path('rand/dice', views.get_rand_dice, name='rand_dice'),
-    path('rand/lotto', views.get_rand_lotto, name='rand_lotto')
+    path('rand/lotto', views.get_rand_lotto, name='rand_lotto'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ]
