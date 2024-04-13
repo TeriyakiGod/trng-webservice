@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Random Result</title>
+</head>
+
+<body>
+    {% if error %}
+    <h1>Error</h1>
+    <p>{{ error }}</p>
+    {% else %}
+    <h1>Result</h1>
+    <pre>{{ values }}</pre>
+    <p>Timestamp: {{ timestamp }}</p>
+    {% endif %}
+</body>
+
+</html>

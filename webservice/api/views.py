@@ -76,7 +76,7 @@ def get_rand_int(request: Request):
                     status = 503
                 timestamp = datetime.now().isoformat()
                 data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random floats and a timestamp.
 # @param request HTTP request object.
