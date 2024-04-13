@@ -109,7 +109,7 @@ def get_rand_float(request: Request):
                 status = 503
             timestamp = datetime.now().isoformat()
             data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random bytes and a timestamp.
 # @param request HTTP request object.
@@ -139,7 +139,7 @@ def get_rand_bytes(request: Request):
                 status = 503
             timestamp = datetime.now().isoformat()
             data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random strings and a timestamp.
 # @param request HTTP request object.
@@ -176,7 +176,7 @@ def get_rand_string(request: Request):
                 status = 503
             timestamp = datetime.now().isoformat()
             data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
       
 ## @brief This view returns a json object with a random sequence in range and a timestamp.
 # @param request HTTP request object.
@@ -202,7 +202,7 @@ def get_rand_sequence(request: Request):
             status = 503
         timestamp = datetime.now().isoformat()
         data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random coin flips and a timestamp.
 # @param request HTTP request object.
@@ -227,7 +227,7 @@ def get_rand_coin(request: Request):
             status = 503
         timestamp = datetime.now().isoformat()
         data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random dice rolls and a timestamp.
 # @param request HTTP request object.
@@ -259,7 +259,7 @@ def get_rand_dice(request: Request):
             status = 503
         timestamp = datetime.now().isoformat()
         data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random lotto tickets and a timestamp.
 # @param request HTTP request object.
@@ -284,4 +284,4 @@ def get_rand_lotto(request: Request):
             status = 503
         timestamp = datetime.now().isoformat()
         data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status)
+    return Response(data, status=status, template_name="random_result.html")
