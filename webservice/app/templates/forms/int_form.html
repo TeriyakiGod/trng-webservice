@@ -1,22 +1,14 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Integer Form</title>
-</head>
-
-<body>
-    <h1>Integer Form</h1>
-    <form action="/api/rand/int" method="get">
-        <label for="n">N:</label><br>
-        <input type="number" id="n" name="n" value=1><br>
-        <label for="min">Min:</label><br>
-        <input type="number" id="min" name="min" value=0><br>
-        <label for="max">Max:</label><br>
-        <input type="number" id="max" name="max" value=10><br>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-
-</html>
+{% block content %}
+<h2>Integer Form</h2>
+<form action="/api/rand/int" method="get">
+    <label for="n">N:</label><br>
+    <input type="number" id="n" name="n" value=1><br>
+    <label for="min">Min:</label><br>
+    <input type="number" id="min" name="min" value=0><br>
+    <label for="max">Max:</label><br>
+    <input type="number" id="max" name="max" value=10><br>
+    <input type="submit" value="Submit">
 </form>
+{% endblock %}

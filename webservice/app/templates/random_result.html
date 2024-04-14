@@ -12,7 +12,15 @@
     <p>{{ error }}</p>
     {% else %}
     <h1>Result</h1>
-    <pre>{{ values }}</pre>
+    <p>[<br>
+        {% for value in values %}
+        {{ value }}{% if not forloop.last %},{% endif %}
+        {% if forloop.counter|divisibleby:10 %}
+        <br>
+        {% endif %}
+        {% endfor %}<br>
+        ]
+    </p>
     <p>Timestamp: {{ timestamp }}</p>
     {% endif %}
 </body>
