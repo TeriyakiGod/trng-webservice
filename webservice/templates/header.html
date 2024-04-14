@@ -1,7 +1,7 @@
 <header>
     <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">TRNG Web Service</a>
+            <a class="navbar-brand" href="/">TRNG Web Service</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -16,10 +16,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Random</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Integer</a></li>
-                            <li><a class="dropdown-item" href="#">Float</a></li>
-                            <li><a class="dropdown-item" href="#">String</a></li>
+                            {% for tool in rand_tools %}
+                            <li><a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">{{ tool.name }}</a></li>
+                            {% endfor %}
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
                     </li>
                 </ul>
             </div>

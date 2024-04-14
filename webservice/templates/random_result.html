@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Random Result</title>
-</head>
+{% block content %}
 
-<body>
+<div>
     {% if error %}
     <h1>Error</h1>
     <p>{{ error }}</p>
@@ -14,7 +10,7 @@
     <h1>Result</h1>
     <p>[<br>
         {% for value in values %}
-        {{ value }}{% if not forloop.last %},{% endif %}
+        {{ value }}{% if not forloop.last %}{% endif %}
         {% if forloop.counter|divisibleby:10 %}
         <br>
         {% endif %}
@@ -23,6 +19,6 @@
     </p>
     <p>Timestamp: {{ timestamp }}</p>
     {% endif %}
-</body>
+</div>
 
-</html>
+{% endblock %}
