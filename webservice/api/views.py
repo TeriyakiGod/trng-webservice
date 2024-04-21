@@ -74,6 +74,7 @@ def get_rand_int(request: Request):
                 except asyncio.TimeoutError:
                     data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
                     status = 503
+                    return Response(data, status=status, template_name="random_result.html")
                 timestamp = datetime.now().isoformat()
                 data = {"values": values, "timestamp": timestamp}
     return Response(data, status=status, template_name="random_result.html")
