@@ -2,22 +2,17 @@
 
 {% block content %}
 
-<div>
+<div class="container mt-5">
     {% if error %}
-    <h1>Error</h1>
-    <p>{{ error }}</p>
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Error</h4>
+        <p>{{ error }}</p>
+    </div>
     {% else %}
-    <h1>Result</h1>
-    <p>[<br>
-        {% for value in values %}
-        {{ value }}{% if not forloop.last %}{% endif %}
-        {% if forloop.counter|divisibleby:10 %}
-        <br>
-        {% endif %}
-        {% endfor %}<br>
-        ]
-    </p>
-    <p>Timestamp: {{ timestamp }}</p>
+    <h1 class="mb-4">Result</h1>
+    <pre class="mb-4">{{ values }}</pre>
+    </table>
+    <p class="mt-4">Timestamp: {{ timestamp }}</p>
     {% endif %}
 </div>
 
