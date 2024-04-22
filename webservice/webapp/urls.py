@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'app'
+app_name = 'webapp'
 
 urlpatterns = [
     path("", views.display_page, name="index", kwargs={"template": "index.html"}),
