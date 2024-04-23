@@ -51,7 +51,7 @@ def get_rand_int(request: Request):
     if n <= 0:
         data = {"error": "Invalid n. Must be greater than 0"}
         status = 400
-    elif n > 10000:
+    elif n > 1024:
         data = {"error": "Invalid n. Must be less than or equal to 10000"}
         status = 400
     else:
@@ -60,6 +60,7 @@ def get_rand_int(request: Request):
         if min > max:
             data = {"error": "Invalid parameters. min must be less than or equal to max."}
             status = 400
+        # TODO: Determine the possible range
         elif min > 1000000000 or max > 1000000000 or min < -1000000000 or max < -1000000000:
             data = {"error": "Invalid parameters. min and max must be between -1000000000 and 1000000000."}
             status = 400
@@ -158,25 +159,33 @@ def get_rand_string(request: Request):
         data = {"error": "Invalid n. Must be less than or equal to 1024"}
         status = 400
     else:
-        digits = request.query_params.get('digits', 'True') != 'False'
-        letters = request.query_params.get('letters', 'True') != 'False'
-        special = request.query_params.get('special', 'True') != 'False'
-        repeat = request.query_params.get('repeat', 'True') != 'False'
-        limit = (52 if letters else 0) + (10 if digits else 0) + (33 if special else 0)
-        if not digits and not letters and not special:
-            data = {"error": "Invalid parameters. At least one of digits, letters, or special must be true."}
+        m = int(request.query_params.get('m', 4))
+        if m <= 0:
+            data = {"error": "Invalid m. Must be greater than 0"}
             status = 400
-        elif not repeat and n > limit:
-            data = {"error": "Invalid parameters. n must be less than or equal to" + str(limit) + "with those options, when repeat is false."}
+        elif m > 1024:
+            data = {"error": "Invalid m. Must be less than or equal to 1024"}
             status = 400
         else:
-            try:
-                values = async_to_sync(rand.get_string)(n, digits, letters, special, repeat)
-            except asyncio.TimeoutError:
-                data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
-                status = 503
-            timestamp = datetime.now().isoformat()
-            data = {"values": values, "timestamp": timestamp}
+            digits = request.query_params.get('digits', 'True') != 'False'
+            letters = request.query_params.get('letters', 'True') != 'False'
+            special = request.query_params.get('special', 'True') != 'False'
+            repeat = request.query_params.get('repeat', 'True') != 'False'
+            limit = (52 if letters else 0) + (10 if digits else 0) + (33 if special else 0)
+            if not digits and not letters and not special:
+                data = {"error": "Invalid parameters. At least one of digits, letters, or special must be true."}
+                status = 400
+            elif not repeat and n > limit:
+                data = {"error": "Invalid parameters. n must be less than or equal to" + str(limit) + "with those options, when repeat is false."}
+                status = 400
+            else:
+                try:
+                    values = async_to_sync(rand.get_strings)(n, m, digits, letters, special, repeat)
+                except asyncio.TimeoutError:
+                    data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+                    status = 503
+                timestamp = datetime.now().isoformat()
+                data = {"values": values, "timestamp": timestamp}
     return Response(data, status=status, template_name="random_result.html")
       
 ## @brief This view returns a json object with a random sequence in range and a timestamp.
