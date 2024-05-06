@@ -29,7 +29,7 @@
                         <a href="{% url 'app:'|add:tool.path %}">
                             <h5 class="card-title">{{ tool.name }}</h5>
                         </a>
-                        <p class="card-text">{{ tool.description }}</p>
+                        <p class="card-text">{{ tool.short_description }}</p>
                     </div>
                 </div>
                 {% endfor %}

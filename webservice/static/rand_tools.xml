@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rand_tools>
+    <rand_tool>
+        <name>Integer</name>
+        <path>rand_int</path>
+        <short_description>Generate random integers</short_description>
+        <description>This tool generates random integers within a specified range.</description>
+    </rand_tool>
+    <rand_tool>
+        <name>Float</name>
+        <path>rand_float</path>
+        <short_description>Generate random floating point numbers</short_description>
+        <description>This tool generates random floating point numbers within a specified range.</description>
+    </rand_tool>
+    <rand_tool>
+        <name>String</name>
+        <path>rand_string</path>
+        <short_description>Generate random strings</short_description>
+        <description>This tool generates random strings of a specified length.</description>
+    </rand_tool>
+</rand_tools>

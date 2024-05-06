@@ -44,41 +44,19 @@ from . import serializers
     )
 @api_view(['GET'])
 def get_rand_int(request: Request):
-    data = None
-    status = 200
-
-    n = int(request.query_params.get('n', 1))
-    if n <= 0:
-        data = {"error": "Invalid n. Must be greater than 0"}
-        status = 400
-    elif n > 1024:
-        data = {"error": "Invalid n. Must be less than or equal to 10000"}
-        status = 400
+    serialized_request = serializers.RandomIntRequestSerializer(data=request.query_params)
+    if serialized_request.is_valid(raise_exception=True):
+        n, min, max, repeat = serialized_request.validated_data['n'], serialized_request.validated_data['min'], serialized_request.validated_data['max'], serialized_request.validated_data['repeat']  # type: ignore
+        try:
+            values = async_to_sync(rand.get_int)(n, min, max, repeat)
+        except asyncio.TimeoutError:
+            data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
+            return Response(data, 503, template_name="random_result.html")
+        timestamp = datetime.now().isoformat()
+        data = {"values": values, "timestamp": timestamp}
+        return Response(data, template_name="random_result.html")
     else:
-        min = int(request.query_params.get('min', 0)) # TODO: Determine the possible range
-        max = int(request.query_params.get('max', 100))
-        if min > max:
-            data = {"error": "Invalid parameters. min must be less than or equal to max."}
-            status = 400
-        # TODO: Determine the possible range
-        elif min > 1000000000 or max > 1000000000 or min < -1000000000 or max < -1000000000:
-            data = {"error": "Invalid parameters. min and max must be between -1000000000 and 1000000000."}
-            status = 400
-        else:
-            repeat = request.query_params.get('repeat', 'True') != 'False'
-            if not repeat and n > (max - min + 1):
-                data = {"error": "Invalid parameters. n must be less than or equal to the length of the range, when repeat is false."}
-                status = 400
-            else:
-                try:
-                    values = async_to_sync(rand.get_int)(n, min, max)
-                except asyncio.TimeoutError:
-                    data = {"error": "ERROR: The service is currently unavailable. Please try again later."}
-                    status = 503
-                    return Response(data, status=status, template_name="random_result.html")
-                timestamp = datetime.now().isoformat()
-                data = {"values": values, "timestamp": timestamp}
-    return Response(data, status=status, template_name="random_result.html")
+        return Response({"error": serialized_request.errors}, 400, template_name="random_result.html")
 
 ## @brief This view returns a json object with a list of random floats and a timestamp.
 # @param request HTTP request object.

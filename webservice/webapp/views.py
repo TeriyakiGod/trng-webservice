@@ -2,6 +2,8 @@ from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
+
+from .models import RandTool
 from .serializers import RandomIntForm, RandomIntFormSerializer
 from django.urls import reverse
 
@@ -16,14 +18,15 @@ def display_random_int_form(request: Request):
         serializer = RandomIntFormSerializer(data=request.data)
         if serializer.is_valid():
             form: RandomIntForm = serializer.save() # type: ignore
-            params = "?n={}&min={}&max={}".format(form.n, form.min, form.max)
+            params = "?n={}&min={}&max={}&repeat={}".format(form.n, form.min, form.max, form.repeat)
             return redirect(reverse('api:rand_int') + params, name="Integer", description="Generate random integers")   
     else:
-        form = RandomIntForm(n=1, min=0, max=100)
+        form = RandomIntForm(n=1, min=0, max=100, repeat=True)
         serializer = RandomIntFormSerializer(form)
+        rand_tool = RandTool.objects.get(path="rand_int")
         return Response({
             'serializer': serializer, 
             'form': form,
-            'name': "Integer",
-            'description': "Generate random integers"
-            }, template_name='forms/rand_int.html')
+            'name': rand_tool.name,
+            'description': rand_tool.description
+            }, template_name='forms/rand_tool_form.html')

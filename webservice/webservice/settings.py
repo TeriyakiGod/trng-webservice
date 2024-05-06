@@ -33,7 +33,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'drf_spectacular_sidecar',
-    'webapp.apps.WebAppConfig',
+    'webapp',
+    'api',
+    'trng'
 ]
 
 MIDDLEWARE = [
@@ -44,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'webapp.middleware.VisitorMiddleware'
 ]
 
 ROOT_URLCONF = 'webservice.urls'

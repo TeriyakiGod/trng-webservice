@@ -2,26 +2,67 @@
 
 {% block content %}
 
-<div class="container mt-3">
+<div class="container">
     {% if error %}
     <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Error</h4>
         <p>{{ error }}</p>
+        <a href="javascript:history.back()" class="btn btn-primary mt-4">Go Back</a>
     </div>
     {% else %}
     <h1 class="mt-4 mb-3">Result</h1>
-    <pre>{{values}}</pre>
-    <hr>
-    <div class="row justify-content-md-left">
-        {% for value in values %}
-        <div class="col col-lg-1">
-            <pre>{{ value }}</pre>
-        </div>
-        {% endfor %}
-    </div>
-    <p class="mt-4">Timestamp: {{ timestamp }}</p>
-    <a href="javascript:history.back()" class="btn btn-primary mt-4">Go Back</a>
-    {% endif %}
-</div>
 
+    <div class="container">
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <h6>Raw:</h6>
+            </div>
+            <div class="col">
+                <code>{{ values }}</code>
+            </div>
+            <div class="col-3">
+                <div style="float: right;">
+                    {% include 'copy_button.html' %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <h6>Formatted:</h6>
+            </div>
+            <div class="col">
+                <div>
+                    <div class="row row-cols-5">
+                        {% for value in values %}
+                        <div class="col">
+                            <span>{{ value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div style="float: right;">
+                    {% include 'copy_button.html' %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <h6>Timestamp:</h6>
+            </div>
+            <div class="col">
+                <span>{{ timestamp }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <a href="javascript:history.back()" class="btn btn-primary mt-4">Go Back</a>
+        <a href="#" class="btn btn-secondary mt-4" disabled style="float: right;">Statistics</a>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -14,5 +14,5 @@ urlpatterns = [
     path('rand/dice', views.get_rand_dice, name='rand_dice'),
     path('rand/lotto', views.get_rand_lotto, name='rand_lotto'),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('', SpectacularSwaggerView.as_view(url_name='api:schema'), name='swagger-ui'),
 ]
