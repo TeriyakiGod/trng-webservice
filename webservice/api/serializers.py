@@ -1,14 +1,14 @@
-from random import Random
+from cProfile import label
 from rest_framework import serializers
 from . import UINT32_MAX
 from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto
        
         
 class RandomIntSerializer(serializers.Serializer):
-    n = serializers.IntegerField(max_value=10000, min_value=1, label="Count") #TODO: Fix forms
-    min = serializers.IntegerField()
-    max = serializers.IntegerField()
-    repeat = serializers.BooleanField()
+    n = serializers.IntegerField(label="N", help_text="Number of random integers to generate (1 to 10000)")
+    min = serializers.IntegerField(label="Minimum value", help_text="Minimum value of the random integers (-2^32 to 2^32 - 1)")
+    max = serializers.IntegerField(label="Maximum value", help_text="Maximum value of the random integers (-2^32 to 2^32 - 1)")
+    repeat = serializers.BooleanField(label="Allow repeated values", help_text="Check if you want values to repeat")
     
     def create(self, validated_data):
         return RandomInt(**validated_data)
@@ -31,15 +31,15 @@ class RandomIntSerializer(serializers.Serializer):
         return data
         
 class RandomFloatSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
-    precision = serializers.IntegerField()
+    n = serializers.IntegerField(label="N", help_text="Number of random floats to generate (1 to 10000)")
+    precision = serializers.IntegerField(label="Precision", help_text="Number of decimal places (1 to 9)")
     
     def create(self, validated_data):
         return RandomFloat(**validated_data)
     
     def validate(self, data):
-        if data['precision'] < 0:
-            raise serializers.ValidationError("precision must be greater than or equal to 0")
+        if data['precision'] < 1:
+            raise serializers.ValidationError("precision must be greater than or equal to 1")
         if data['precision'] > 9:
             raise serializers.ValidationError("precision must be less than 10")
         if data['n'] < 1:
@@ -49,12 +49,12 @@ class RandomFloatSerializer(serializers.Serializer):
         return data
     
 class RandomStringSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
-    m = serializers.IntegerField()
-    digits = serializers.BooleanField()
-    letters = serializers.BooleanField()
-    special = serializers.BooleanField()
-    repeat = serializers.BooleanField()
+    n = serializers.IntegerField(label="N", help_text="Number of random strings to generate (1 to 10000)")
+    m = serializers.IntegerField(label="M", help_text="Length of the random strings (1 to 100)")
+    digits = serializers.BooleanField(label="Digits", help_text="Check if you want digits in the random strings")
+    letters = serializers.BooleanField(label="Letters", help_text="Check if you want letters in the random strings")
+    special = serializers.BooleanField(label="Special characters", help_text="Check if you want special characters in the random strings")
+    repeat = serializers.BooleanField(label="Allow repeated values", help_text="Check if you want values to repeat")
     
     def create(self, validated_data):
         return RandomString(**validated_data)
@@ -94,8 +94,8 @@ class RandomStringSerializer(serializers.Serializer):
         return data
 
 class RandomBytesSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
-    f = serializers.ChoiceField(choices=[(format.value, format.name) for format in BytesFormat])
+    n = serializers.IntegerField(label="N", help_text="Number of random bytes to generate (1 to 10000)")
+    f = serializers.ChoiceField(label="Numeral system",choices=[(format.value, format.name) for format in BytesFormat], help_text="Choose the numeral system for the random bytes to be represented in")
     
     def create(self, validated_data):
         return RandomBytes(**validated_data)
@@ -110,8 +110,8 @@ class RandomBytesSerializer(serializers.Serializer):
         return data
     
 class RandomSequenceSerializer(serializers.Serializer):
-    min = serializers.IntegerField()
-    max = serializers.IntegerField()
+    min = serializers.IntegerField(label="Minimum value", help_text="Minimum value of the random sequence (-2^32 to 2^32 - 1)")
+    max = serializers.IntegerField(label="Maximum value", help_text="Maximum value of the random sequence (-2^32 to 2^32 - 1)")
     
     def create(self, validated_data):
         return RandomSequence(**validated_data)
@@ -128,7 +128,7 @@ class RandomSequenceSerializer(serializers.Serializer):
         return data
     
 class RandomCoinSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
+    n = serializers.IntegerField(label="N", help_text="Number of random coin flips to generate (1 to 10000)")
     
     def create(self, validated_data):
         return RandomCoin(**validated_data)
@@ -141,8 +141,8 @@ class RandomCoinSerializer(serializers.Serializer):
         return data
     
 class RandomDiceSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
-    m = serializers.IntegerField()
+    n = serializers.IntegerField(label="N", help_text="Number of random dice rolls to generate (1 to 10000)")
+    m = serializers.IntegerField(label="Sides", help_text="Number of sides on the dice (1 to 100)")
     
     def create(self, validated_data):
         return RandomDice(**validated_data)
@@ -159,7 +159,7 @@ class RandomDiceSerializer(serializers.Serializer):
         return data
     
 class RandomLottoSerializer(serializers.Serializer):
-    n = serializers.IntegerField()
+    n = serializers.IntegerField(label="N", help_text="Number of random lotto tickets to generate (1 to 10000)")
     
     def create(self, validated_data):
         return RandomLotto(**validated_data)

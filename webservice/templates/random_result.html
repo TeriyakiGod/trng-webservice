@@ -4,27 +4,27 @@
 
 <div class="container">
     <h1 class="mt-4 mb-5 text-center">Result</h1>
-    <hr>
     <div class="container">
+        <hr>
         <div class="row">
-            <div class="col-3">
+            <div class="col">
                 <h6>Raw:</h6>
             </div>
-            <div class="col">
-                <code>{{ values }}</code>
+            <div class="col-10">
+                <pre>{{ values }}</pre>
             </div>
-            <div class="col-3">
-                <div style="float: right;">
+            <!-- <div class="col-3">
+                <div class="float-end">
                     {% include 'copy_button.html' %}
                 </div>
-            </div>
+            </div> -->
         </div>
         <hr>
         <div class="row">
-            <div class="col-3">
+            <div class="col">
                 <h6>Formatted:</h6>
             </div>
-            <div class="col">
+            <div class="col-10">
                 <div>
                     <div class="row row-cols-5">
                         {% for value in values %}
@@ -35,25 +35,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
-                <div style="float: right;">
+            <!-- <div class="col-3">
+                <div class="float-end">
                     {% include 'copy_button.html' %}
                 </div>
-            </div>
+            </div> -->
         </div>
         <hr>
         <div class="row">
-            <div class="col-3">
+            <div class="col">
                 <h6>Timestamp:</h6>
             </div>
-            <div class="col">
+            <div class="col-10">
                 <span>{{ timestamp }}</span>
             </div>
         </div>
+        <hr>
     </div>
     <div class="d-flex justify-content-between">
         <a href="javascript:history.back()" class="btn btn-primary mt-4">Go Back</a>
-        <a href="#" class="btn btn-secondary mt-4" disabled style="float: right;">Statistics</a>
+        <a href="#" class="btn btn-secondary mt-4">Statistics</a>
     </div>
 </div>
 {% endblock %}

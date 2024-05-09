@@ -22,13 +22,12 @@ def random_tool_form_view(request: Request, tool: RandomTool):
             for key in dict:
                 params += "{}={}&".format(key, dict[key])
             return redirect(reverse('api:' + tool.name) + params)
-    else:
-        form = tool.model()
-        serializer = tool.serializer(form)
-        rand_tool = RandTool.objects.get(path=tool.name)
-        return Response({
-            'serializer': serializer,
-            'name': rand_tool.name,
-            'description': rand_tool.description
-            }, template_name='rand_tool_form.html')
+    form = tool.model()
+    serializer = tool.serializer(form)
+    rand_tool = RandTool.objects.get(path=tool.name)
+    return Response({
+        'serializer': serializer,
+        'name': rand_tool.name,
+        'description': rand_tool.description
+        }, template_name='rand_tool_form.html')
         

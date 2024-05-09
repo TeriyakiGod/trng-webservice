@@ -3,14 +3,17 @@
 {% load rest_framework %}
 
 {% block content %}
-<div class="container mt-3">
+<div class="container" style="max-width: 600px;">
     <h2 class="mt-4 mb-3">{{ name }}</h2>
     <p class="lead">{{ description }}</p>
-    <div class="" style="width: 300px;">
-        <form action="" method="post" class="form-group">
+    <div class="">
+        <form action="" method="post" class="form-group d-flex flex-column gap-4">
             {% csrf_token %}
-            {% render_form serializer %}<br>
-            <input type="submit" value="Submit" class="btn btn-primary">
+            {% render_form serializer %}
+            <div class="d-flex justify-content-between">
+                <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
+                <input type="submit" value="Submit" class="btn btn-success">
+            </div>
         </form>
     </div>
 </div>
