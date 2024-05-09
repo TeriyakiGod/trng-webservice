@@ -3,17 +3,9 @@
 {% block content %}
 
 <div class="container">
-    {% if error %}
-    <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">Error</h4>
-        <p>{{ error }}</p>
-        <a href="javascript:history.back()" class="btn btn-primary mt-4">Go Back</a>
-    </div>
-    {% else %}
-    <h1 class="mt-4 mb-3">Result</h1>
-
+    <h1 class="mt-4 mb-5 text-center">Result</h1>
+    <hr>
     <div class="container">
-        <hr>
         <div class="row">
             <div class="col-3">
                 <h6>Raw:</h6>
@@ -64,5 +56,4 @@
         <a href="#" class="btn btn-secondary mt-4" disabled style="float: right;">Statistics</a>
     </div>
 </div>
-{% endif %}
 {% endblock %}

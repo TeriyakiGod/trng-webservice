@@ -3,30 +3,32 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 
+from api.rand_tools import RandomTool
 from .models import RandTool
-from .serializers import RandomIntForm, RandomIntFormSerializer
 from django.urls import reverse
 
-
 @api_view(['GET'])
-def display_template(request: Request, template: str):
+def template_view(request: Request, template: str):
     return Response(template_name=template)
-
+        
 @api_view(['GET', 'POST'])
-def display_random_int_form(request: Request):
+def random_tool_form_view(request: Request, tool: RandomTool):
     if request.method == 'POST':
-        serializer = RandomIntFormSerializer(data=request.data)
-        if serializer.is_valid():
-            form: RandomIntForm = serializer.save() # type: ignore
-            params = "?n={}&min={}&max={}&repeat={}".format(form.n, form.min, form.max, form.repeat)
-            return redirect(reverse('api:rand_int') + params, name="Integer", description="Generate random integers")   
+        serializer = tool.serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serialized_form = serializer.save()
+            dict = vars(serialized_form)
+            params = "?"
+            for key in dict:
+                params += "{}={}&".format(key, dict[key])
+            return redirect(reverse('api:' + tool.name) + params)
     else:
-        form = RandomIntForm(n=1, min=0, max=100, repeat=True)
-        serializer = RandomIntFormSerializer(form)
-        rand_tool = RandTool.objects.get(path="rand_int")
+        form = tool.model()
+        serializer = tool.serializer(form)
+        rand_tool = RandTool.objects.get(path=tool.name)
         return Response({
-            'serializer': serializer, 
-            'form': form,
+            'serializer': serializer,
             'name': rand_tool.name,
             'description': rand_tool.description
-            }, template_name='forms/rand_tool_form.html')
+            }, template_name='rand_tool_form.html')
+        

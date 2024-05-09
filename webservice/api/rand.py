@@ -1,9 +1,5 @@
 from trng.interface import rng
-from typing import Final
-
-## The maximum value of a uint32.
-# @var UINT32_MAX
-UINT32_MAX: Final[int] = 4294967295
+from . import UINT32_MAX
 
 ## @brief This function scales uint32 random numbers to an integer within a given range using Lemire's Method: Debiased Integer Multiplication. 
 #  @param range The range within which to generate the random integer.
@@ -50,8 +46,6 @@ async def get_int(n: int, min: int, max: int, repeat: bool = True) -> list[int]:
         seq = [i for i in range(min, max+1)]
         return [seq.pop(await random_to_int(len(seq))) for _ in range(n)]
         
-    
-    
 ## @brief This function generates a list of random floats with a given precision.
 #  @param n The number of floats to generate.
 #  @param precision The precision of the generated floats.
@@ -105,10 +99,12 @@ async def get_strings(n: int, m: int, digits: bool, letters: bool, special, repe
         char_list += special_list
     word_list:list[str] = []
     for i in range(n):
+        if m > len(char_list):
+            raise ValueError("m cannot be greater than the number of available characters")
         if repeat:
             word = ''.join([char_list[await random_to_int(len(char_list))] for _ in range(m)])
         else:
-            word = ''.join([char_list.pop(await random_to_int(len(char_list))) for _ in range(m)])
+            word = ''.join([char_list.pop(await random_to_int(len(char_list))) for _ in range(m)]) #TODO: IndexError: pop from empty list - FIX IT
         word_list.append(word)
     return word_list
         
@@ -136,6 +132,8 @@ async def get_coin_flips(n: int) -> list[str]:
 async def get_dice_rolls(n: int, m: int) -> list[int]:
     return [await random_to_int(m) + 1 for _ in range(n)]
 
-
+## @brief This function generates a list of n random lotto numbers.
+#  @param n The number of lotto numbers to generate.
+#  @return A list of n random lotto numbers.
 async def get_lotto(n: int) -> list[list[int]]:
         return [await get_int(6, 1, 49, False) for _ in range(n)]
