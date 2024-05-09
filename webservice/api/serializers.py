@@ -1,7 +1,6 @@
-from cProfile import label
 from rest_framework import serializers
 from . import UINT32_MAX
-from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto
+from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap
        
         
 class RandomIntSerializer(serializers.Serializer):
@@ -171,6 +170,25 @@ class RandomLottoSerializer(serializers.Serializer):
             raise serializers.ValidationError("n must be less than 10000")
         return data
 
-class ErrorSerializer(serializers.Serializer):
-    error = serializers.CharField()
-    timestamp = serializers.DateTimeField()
+class RandomBitmapSerializer(serializers.Serializer):
+    width = serializers.IntegerField(label="Width", help_text="Width of the bitmap (1 to 128)")
+    height = serializers.IntegerField(label="Height", help_text="Height of the bitmap (1 to 128)")
+    zoom_factor = serializers.IntegerField(label="Zoom", help_text="How many times should the image be enlarged (1 to 16). The final image resolution is width * zoom x height * zoom")
+    
+    def create(self, validated_data):
+        return RandomBitmap(**validated_data)
+    
+    def validate(self, data):
+        if data['width'] < 1:
+            raise serializers.ValidationError("width must be greater than 0")
+        if data['width'] > 128:
+            raise serializers.ValidationError("width must be less than 1025")
+        if data['height'] < 1:
+            raise serializers.ValidationError("height must be greater than 0")
+        if data['height'] > 128:
+            raise serializers.ValidationError("height must be less than 1025")
+        if data['zoom_factor'] < 1:
+            raise serializers.ValidationError("zoom_factor must be greater than 0")
+        if data['zoom_factor'] > 16:
+            raise serializers.ValidationError("zoom_factor must be less or equal to 16")
+        return data

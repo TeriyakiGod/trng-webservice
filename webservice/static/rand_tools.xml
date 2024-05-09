@@ -48,4 +48,10 @@
         <short_description>Generate lotto numbers</short_description>
         <description>This tool generates random lotto numbers. 6 random numbers between 1 and 49.</description>
     </rand_tool>
+    <rand_tool>
+        <name>Bitmap</name>
+        <path>rand_bitmap</path>
+        <short_description>Generate a random bitmap</short_description>
+        <description>This tool generates a random bitmap image.</description>
+    </rand_tool>
 </rand_tools>

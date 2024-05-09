@@ -49,3 +49,9 @@ class RandomDice:
 class RandomLotto:
     def __init__(self, n: int = 10):
         self.n = n
+
+class RandomBitmap:
+    def __init__(self, width: int = 32, height: int = 32, zoom_factor: int = 8):
+        self.width = width
+        self.height = height
+        self.zoom_factor = zoom_factor

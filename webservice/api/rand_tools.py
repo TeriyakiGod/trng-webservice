@@ -17,6 +17,7 @@ random_sequence = RandomTool("rand_sequence",rand.get_sequence, serializers.Rand
 random_coin = RandomTool("rand_coin",rand.get_coin_flips, serializers.RandomCoinSerializer, models.RandomCoin)
 random_dice = RandomTool("rand_dice",rand.get_dice_rolls, serializers.RandomDiceSerializer, models.RandomDice)
 random_lotto = RandomTool("rand_lotto",rand.get_lotto, serializers.RandomLottoSerializer, models.RandomLotto)
+random_bitmap = RandomTool("rand_bitmap",rand.get_bitmap, serializers.RandomBitmapSerializer, models.RandomBitmap)
         
 
 

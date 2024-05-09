@@ -20,6 +20,7 @@
                             <li><a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">{{ tool.name }}</a></li>
                             {% endfor %}
                         </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
@@ -38,6 +39,17 @@
                         </form>
                     </li>
                     {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-circle-half"></i>
+                        </a>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-bs-theme-value="dark">Dark</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-theme-value="light">Light</a></li>
+                            <li><a class="dropdown-item" href="#" data-bs-theme-value="auto">Auto</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

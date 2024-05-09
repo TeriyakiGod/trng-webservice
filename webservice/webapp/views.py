@@ -7,6 +7,8 @@ from api.rand_tools import RandomTool
 from .models import RandTool
 from django.urls import reverse
 
+from .models import RandTool
+
 @api_view(['GET'])
 def template_view(request: Request, template: str):
     return Response(template_name=template)

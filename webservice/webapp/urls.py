@@ -16,5 +16,6 @@ urlpatterns = [
     path("rand_coin/", views.random_tool_form_view, name="rand_coin", kwargs={"tool": rand_tools.random_coin}),
     path("rand_dice/", views.random_tool_form_view, name="rand_dice", kwargs={"tool": rand_tools.random_dice}), 
     path("rand_lotto/", views.random_tool_form_view, name="rand_lotto", kwargs={"tool": rand_tools.random_lotto}),
+    path("rand_bitmap/", views.random_tool_form_view, name="rand_bitmap", kwargs={"tool": rand_tools.random_bitmap})
 ]
 

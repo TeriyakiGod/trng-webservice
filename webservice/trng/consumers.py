@@ -5,7 +5,7 @@ from channels.generic.websocket import WebsocketConsumer
 from . import logger
 
 class TrngConsumer(WebsocketConsumer):
-    buffer: collections.deque[c_uint32] = collections.deque(maxlen=100000)
+    buffer: collections.deque[c_uint32] = collections.deque(maxlen=1000000)
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,4 +1,5 @@
 from trng.interface import rng
+from PIL import Image
 from . import UINT32_MAX
 
 ## @brief This function scales uint32 random numbers to an integer within a given range using Lemire's Method: Debiased Integer Multiplication. 
@@ -137,3 +138,18 @@ async def get_dice_rolls(n: int, m: int) -> list[int]:
 #  @return A list of n random lotto numbers.
 async def get_lotto(n: int) -> list[list[int]]:
         return [await get_int(6, 1, 49, False) for _ in range(n)]
+    
+
+async def get_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
+    # Create a new image with the enlarged size
+    img = Image.new('1', (width * zoom_factor, height * zoom_factor))
+    
+    # Generate random pixels based on zoom factor
+    for y in range(height):
+        for x in range(width):
+            pixel_value = await random_to_int(2)
+            # Set the pixels in the enlarged image
+            for i in range(zoom_factor):
+                for j in range(zoom_factor):
+                    img.putpixel((x * zoom_factor + i, y * zoom_factor + j), pixel_value)
+    return img
