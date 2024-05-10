@@ -3,23 +3,25 @@
 {% block content %}
 <div class="container">
     <h2 class="mt-4 mb-3">Account</h2>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Username: {{ user.username }}</p>
-            <p>Email: {{ user.email }}</p>
-            <p>First Name: {{ user.first_name }}</p>
-            <p>Last Name: {{ user.last_name }}</p>
-        </div>
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-secondary">
-                Change Password </button>
-            <form method="post" action="/auth/logout/">
-                {% csrf_token %}
-                <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-                <button type="submit" name="submit_param" value="submit_value" class="btn btn-primary">
-                    Logout
-                </button>
-            </form>
-        </div>
+
+    <div class="card p-2 m-4">
+        <h3>Username: <span class="">{{ user.username }}</span>
+        </h3>
+        <h3>email: <span class="">{{ user.email }}</span>
+        </h3>
+        <h3>Points: <span class="">{{ profile.points }}</span>
+        </h3>
     </div>
+    <div class="d-flex justify-content-between p-2">
+        <button class="btn disabled">
+            Change Password </button>
+        <form method="post" action="/auth/logout/">
+            {% csrf_token %}
+            <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+            <button type="submit" name="submit_param" value="submit_value" class="btn btn-primary">
+                Logout
+            </button>
+        </form>
+    </div>
+
     {% endblock %}

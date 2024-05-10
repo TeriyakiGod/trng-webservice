@@ -3,6 +3,7 @@ import struct
 import collections
 from channels.generic.websocket import WebsocketConsumer
 from . import logger
+import sys
 
 class TrngConsumer(WebsocketConsumer):
     buffer: collections.deque[c_uint32] = collections.deque(maxlen=1000000)
@@ -22,5 +23,6 @@ class TrngConsumer(WebsocketConsumer):
             random_number: c_uint32 = struct.unpack('<I', bytes_data)[0]
             # Add the random number to the buffer
             TrngConsumer.buffer.appendleft(random_number)
+            logger.info(sys.getsizeof(self.buffer))
         else:
             logger.warning("Did not receive any bytes_data. Ignoring.")

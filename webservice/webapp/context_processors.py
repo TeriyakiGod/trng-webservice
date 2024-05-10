@@ -1,5 +1,8 @@
-from .models import RandTool
+from .models import RandTool, Visitor
+from . import logger
 
 def rand_tools(request):
     tools = RandTool.objects.all()
-    return {'rand_tools': tools}
+    categories = { tool.category for tool in tools }
+    visitor = Visitor.objects.get(ip=request.META.get('REMOTE_ADDR'))
+    return {'rand_tools': tools, 'categories': categories, 'visitor': visitor}

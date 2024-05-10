@@ -1,6 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 from django.core.management.base import BaseCommand
+from matplotlib import category
 from ...models import RandTool
 
 class Command(BaseCommand):
@@ -25,6 +26,7 @@ class Command(BaseCommand):
             path = tool_elem.find('path').text
             short_description = tool_elem.find('short_description').text
             description = tool_elem.find('description').text
+            category = tool_elem.find('category').text
 
             # Check if the tool already exists in the database
             existing_tool = RandTool.objects.filter(name=name).first()
@@ -33,6 +35,7 @@ class Command(BaseCommand):
                 existing_tool.path = path
                 existing_tool.short_description = short_description
                 existing_tool.description = description
+                existing_tool.category = category
                 existing_tool.save()
             else:
                 # Create a new tool

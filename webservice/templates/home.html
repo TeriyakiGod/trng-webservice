@@ -25,10 +25,11 @@
             <div class="row g-2">
                 {% for tool in rand_tools %}
                 <div class="col-12 col-md-4">
-                    <div class="container">
+                    <div class="container p-3">
                         <a href="{% url 'app:'|add:tool.path %}">
                             <h5 class="card-title">{{ tool.name }}</h5>
                         </a>
+                        <h6 class="card-subtitle  text-body-secondary">{{ tool.category }}</h6>
                         <p class="card-text">{{ tool.short_description }}</p>
                     </div>
                 </div>

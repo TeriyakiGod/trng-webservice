@@ -5,6 +5,7 @@ class RandTool(models.Model):
     path = models.CharField(max_length=100)
     short_description = models.CharField(max_length=100, default='')
     description = models.TextField()
+    category = models.CharField(max_length=100, default='')
 
     def __str__(self):
         return self.name
@@ -15,7 +16,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    points = models.IntegerField(default=1000)
+    points = models.IntegerField(default=10000)
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -28,4 +29,4 @@ def save_user_profile(sender, instance, **kwargs):
     
 class Visitor(models.Model):
     ip = models.GenericIPAddressField()
-    points = models.IntegerField(default=1000)
+    points = models.IntegerField(default=10000)

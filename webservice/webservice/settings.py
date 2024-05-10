@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'webapp.middleware.VisitorMiddleware'
+    'webapp.middleware.VisitorMiddleware',
 ]
 
 ROOT_URLCONF = 'webservice.urls'
@@ -189,9 +189,8 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "level": "DEBUG",
             "handlers": ["console", "file"],
-            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "level": "INFO",
             "propagate": True,
         },
     },

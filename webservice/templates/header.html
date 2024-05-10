@@ -16,8 +16,18 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Random</a>
                         <ul class="dropdown-menu">
-                            {% for tool in rand_tools %}
-                            <li><a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">{{ tool.name }}</a></li>
+                            {% for category in categories %}
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle test" href="#">{{ category }}</a>
+                                <ul class="dropdown-menu">
+                                    {% for tool in rand_tools %}
+                                    {% if tool.category == category %}
+                                    <li><a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">{{ tool }}</a>
+                                    </li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
                             {% endfor %}
                         </ul>
                     </li>
@@ -54,4 +64,18 @@
             </div>
         </div>
     </nav>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-submenu a.test').on("click", function (e) {
+                // Hide all other submenus
+                $('.dropdown-submenu a.test').not(this).next('ul').hide();
+
+                // Toggle the current submenu
+                $(this).next('ul').toggle();
+
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
 </header>

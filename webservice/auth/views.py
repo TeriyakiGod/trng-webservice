@@ -5,7 +5,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-
+from webapp.models import Profile, Visitor
     
 class RegisterView(APIView):
     def get(self, request):
@@ -22,4 +22,5 @@ class AccountView(APIView):
         if not request.user.is_authenticated:
             return redirect('/auth/login')
         else:
-            return Response(template_name="account.html")
+            profile = Profile.objects.get(user=request.user)
+            return Response({"profile": profile}, template_name="account.html")

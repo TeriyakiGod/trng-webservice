@@ -2,25 +2,42 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mt-4 mb-3">About</h2>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Welcome to TRNG Web Service, a leading provider of true random number generation services. Our mission is
-                to provide high-quality, reliable, and easy-to-use random number generation for all your needs, whether
-                you're a developer, a data scientist, or a hobbyist.</p>
-            <p>Our services are built on state-of-the-art algorithms and technologies, ensuring that the numbers you
-                generate are truly random and unbiased. We are committed to maintaining the highest standards of service
-                and reliability.</p>
-        </div>
+
+    <div class="container">
+        <h2 class="mt-4 mb-3">About</h2>
+        <blockquote class="blockquote">
+            <p class="">TRNG Web Service employs advanced algorithms and hardware to generate truly unpredictable
+                numbers,
+                crucial for
+                cryptography, simulations, and gaming applications. With its robust architecture, it ensures
+                high-quality random numbers
+                that pass stringent statistical tests for randomness. Users can access this service via an intuitive
+                web
+                interface or
+                integrate it seamlessly into their applications through APIs.
+            </p>
+        </blockquote>
+        <p>For my Engineering Thesis, I delved deep into the intricate workings of random number generation,
+            exploring various
+            methodologies and algorithms. Developing TRNG Web Service was not only a challenging technical
+            endeavor
+            but also a
+            rewarding experience, as it bridges the theoretical foundations of randomness with practical
+            applications. Through
+            meticulous research and rigorous testing, I aimed to create a reliable tool that contributes to the
+            security and
+            efficiency of diverse technological domains. TRNG Web Service stands as a testament to my dedication
+            to
+            advancing the
+            field of random number generation and its pivotal role in modern computing.
+        </p>
+    </div>
+    <div class="container">
+        <h2 class="mt-4 mb-3">How does it work?</h2>
+        {% load static %}
+        <img src="{% static 'img/diagram.webp' %}" alt="Diagram of the system">
+        <p>Fig 1. This diagram represents the structure of trng web service.</p>
     </div>
 
-    <h3 class="mt-4 mb-3">Contact</h3>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>If you have any questions, suggestions, or would like to learn more about our services, please don't
-                hesitate to <a href="/contact">contact us</a>. Our dedicated support team is always ready to assist you.
-            </p>
-        </div>
-    </div>
 </div>
 {% endblock %}
