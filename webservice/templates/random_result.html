@@ -24,7 +24,7 @@
                     <div class="row row-cols-5">
                         {% for value in values %}
                         <div class="col">
-                            <span>{{ value }}</span>
+                            <span class="val bg-dark">{{ value }}</span>
                         </div>
                         {% endfor %}
                     </div>
@@ -47,4 +47,14 @@
         <a href="#" class="btn disabled mt-4">Statistics</a>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.val').each(function () {
+            var value = $(this).text();
+            if (/^#[0-9A-F]{6}$/i.test(value)) {
+                $(this).parent().css('background-color', value);
+            }
+        });
+    });
+</script>
 {% endblock %}

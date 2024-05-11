@@ -153,3 +153,6 @@ async def get_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
                 for j in range(zoom_factor):
                     img.putpixel((x * zoom_factor + i, y * zoom_factor + j), pixel_value)
     return img
+
+async def get_colors(n: int) -> list[str]:
+    return ["#"+("".join(await get_bytes(3, "h"))) for _ in range(n)]

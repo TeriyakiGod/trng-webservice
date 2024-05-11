@@ -1,3 +1,4 @@
+import random
 from . import serializers, rand, models
 import datetime
 
@@ -18,6 +19,7 @@ random_coin = RandomTool("rand_coin",rand.get_coin_flips, serializers.RandomCoin
 random_dice = RandomTool("rand_dice",rand.get_dice_rolls, serializers.RandomDiceSerializer, models.RandomDice)
 random_lotto = RandomTool("rand_lotto",rand.get_lotto, serializers.RandomLottoSerializer, models.RandomLotto)
 random_bitmap = RandomTool("rand_bitmap",rand.get_bitmap, serializers.RandomBitmapSerializer, models.RandomBitmap)
+random_color = RandomTool("rand_color",rand.get_colors, serializers.RandomColorSerializer, models.RandomColor)
         
 
 

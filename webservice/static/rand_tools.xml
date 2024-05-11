@@ -19,7 +19,7 @@
         <path>rand_string</path>
         <short_description>Generate random strings</short_description>
         <description>This tool generates random strings of a specified length.</description>
-        <category>Text</category>
+        <category>Other</category>
     </rand_tool>
     <rand_tool>
         <name>Bytes</name>
@@ -38,15 +38,15 @@
     <rand_tool>
         <name>Coin flip</name>
         <path>rand_coin</path>
-        <short_description>Flip a coin</short_description>
-        <description>This tool simulates flipping a coin.</description>
+        <short_description>Flip coins</short_description>
+        <description>This tool simulates flipping coins.</description>
         <category>Games</category>
     </rand_tool>
     <rand_tool>
         <name>Dice roll</name>
         <path>rand_dice</path>
-        <short_description>Roll a dice</short_description>
-        <description>This tool simulates rolling a dice. U can select number of dice and sides.</description>
+        <short_description>Roll dice</short_description>
+        <description>This tool simulates rolling dice. U can select number of dice and sides.</description>
         <category>Games</category>
     </rand_tool>
     <rand_tool>
@@ -59,8 +59,15 @@
     <rand_tool>
         <name>Bitmap</name>
         <path>rand_bitmap</path>
-        <short_description>Generate a random bitmap</short_description>
-        <description>This tool generates a random bitmap image.</description>
-        <category>Image</category>
+        <short_description>Generate random bitmaps</short_description>
+        <description>This tool generates random bitmaps.</description>
+        <category>Other</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Color</name>
+        <path>rand_color</path>
+        <short_description>Generate random colors</short_description>
+        <description>This tool generates random colors.</description>
+        <category>Other</category>
     </rand_tool>
 </rand_tools>

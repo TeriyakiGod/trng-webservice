@@ -13,6 +13,7 @@ urlpatterns = [
     path('rand/dice', views.rand_tool_view, {"tool": rand_tools.random_dice}, name='rand_dice'),
     path('rand/lotto', views.rand_tool_view, {"tool": rand_tools.random_lotto}, name='rand_lotto'),
     path('rand/bitmap', views.rand_bitmap_view, name='rand_bitmap'),
+    path('rand/color', views.rand_tool_view, {"tool": rand_tools.random_color}, name='rand_color'),
     
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('', SpectacularSwaggerView.as_view(url_name='api:schema'), name='swagger-ui'),

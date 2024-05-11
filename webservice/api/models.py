@@ -55,3 +55,7 @@ class RandomBitmap:
         self.width = width
         self.height = height
         self.zoom_factor = zoom_factor
+        
+class RandomColor:
+    def __init__(self, n: int = 10):
+        self.n = n

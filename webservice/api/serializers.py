@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import UINT32_MAX
-from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap
+from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap, RandomColor
        
         
 class RandomIntSerializer(serializers.Serializer):
@@ -191,4 +191,17 @@ class RandomBitmapSerializer(serializers.Serializer):
             raise serializers.ValidationError("zoom_factor must be greater than 0")
         if data['zoom_factor'] > 16:
             raise serializers.ValidationError("zoom_factor must be less or equal to 16")
+        return data
+    
+class RandomColorSerializer(serializers.Serializer):
+    n = serializers.IntegerField(label="N", help_text="Number of random colors to generate (1 to 10000)")
+    
+    def create(self, validated_data):
+        return RandomColor(**validated_data)
+    
+    def validate(self, data):
+        if data['n'] < 1:
+            raise serializers.ValidationError("n must be greater than 0")
+        if data['n'] > 10000:
+            raise serializers.ValidationError("n must be less than 10000")
         return data
