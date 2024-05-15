@@ -1,3 +1,4 @@
+from numpy import byte
 from trng.interface import rng
 from PIL import Image
 from . import UINT32_MAX
@@ -28,8 +29,13 @@ async def random_to_float(precision: int) -> float:
 #  @return A random byte array of the given length.
 async def random_to_bytes(n: int) -> bytes:
     byte_array = bytearray()
-    for _ in range(n):
-        byte_array.append(await random_to_int(256))
+    for _ in range(n // 4):
+        x = await rng()
+        byte_array.extend(x.to_bytes(4, 'little'))
+    remainder = n % 4
+    if remainder > 0:
+        x = await rng()
+        byte_array.extend(x.to_bytes(remainder, 'little'))
     return bytes(byte_array)
 
 ## @brief This function generates a list of random integers within a given range.
@@ -144,10 +150,21 @@ async def get_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
     # Create a new image with the enlarged size
     img = Image.new('1', (width * zoom_factor, height * zoom_factor))
     
+    # Calculate the total number of pixels
+    total_pixels = width * height
+
+    # Generate random bytes
+    random_bytes = await random_to_bytes(total_pixels // 8 + (total_pixels % 8 > 0))
+
+    # Convert the bytes to a bit array
+    bit_array = [bool(int(b)) for b in bin(int.from_bytes(random_bytes, 'big'))[2:].zfill(total_pixels)]
+
     # Generate random pixels based on zoom factor
+    bit_index = 0
     for y in range(height):
         for x in range(width):
-            pixel_value = await random_to_int(2)
+            pixel_value = bit_array[bit_index]
+            bit_index += 1
             # Set the pixels in the enlarged image
             for i in range(zoom_factor):
                 for j in range(zoom_factor):
