@@ -1,0 +1,51 @@
+{
+    "name": "True Random Number Generator Web Service",
+    "short_name": "TRNG Web Service",
+    "id": "/",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#343a40",
+    "theme_color": "#007bff",
+    "description": "TRNG Web Service provides true random numbers generated using hardware and thermal noise.",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/android-chrome-maskable-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/android-chrome-maskable-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "img/screenshotwide.png",
+            "sizes": "640x320",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "TRNG Web Service"
+        },
+        {
+            "src": "img/screenshotnarrow.png",
+            "sizes": "320x640",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "TRNG Web Service"
+        }
+    ]
+}

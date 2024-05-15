@@ -16,7 +16,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    points = models.IntegerField(default=10000)
+    points = models.BigIntegerField(default=1000000)
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -29,4 +29,4 @@ def save_user_profile(sender, instance, **kwargs):
     
 class Visitor(models.Model):
     ip = models.GenericIPAddressField()
-    points = models.IntegerField(default=10000)
+    points = models.BigIntegerField(default=1000000)

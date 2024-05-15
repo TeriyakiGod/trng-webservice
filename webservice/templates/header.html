@@ -1,20 +1,21 @@
 <header>
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <nav class="navbar navbar-expand-sm bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">TRNG Web Service</a>
+            <a class="navbar-brand text-white" href="/">TRNG Web Service</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link text-white" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
+                        <a class="nav-link text-white" href="/about">About</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Random</a>
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                            data-bs-toggle="dropdown">Random</a>
                         <ul class="dropdown-menu">
                             {% for category in categories %}
                             <li class="dropdown-submenu">
@@ -22,7 +23,10 @@
                                 <ul class="dropdown-menu">
                                     {% for tool in rand_tools %}
                                     {% if tool.category == category %}
-                                    <li><a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">{{ tool }}</a>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'app:'|add:tool.path %}">
+                                            {{ tool.name }}
+                                        </a>
                                     </li>
                                     {% endif %}
                                     {% endfor %}
@@ -32,17 +36,17 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
+                        <a class="nav-link text-white" href="/contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/auth/account">Account</a>
+                        <a class="nav-link text-white" href="/auth/account">Account</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <form method="post" action="/auth/logout/">
                             {% csrf_token %}
                             <input type="hidden" name="extra_submit_param" value="extra_submit_value">
-                            <button class="nav-link" type="submit" name="submit_param" value="submit_value"
+                            <button class="nav-link text-white" type="submit" name="submit_param" value="submit_value"
                                 class="link-button">
                                 Logout
                             </button>
@@ -50,8 +54,9 @@
                     </li>
                     {% endif %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-circle-half"></i>
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-label="Theme mode">
+                            <i class="bi bi-circle-half text-white"></i>
                         </a>
                         </a>
                         <ul class="dropdown-menu">

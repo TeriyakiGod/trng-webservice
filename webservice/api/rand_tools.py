@@ -25,7 +25,7 @@ random_color = RandomTool("rand_color",rand.get_colors, serializers.RandomColorS
         
 
 class RandomResult:
-    def __init__(self, values, points):
+    def __init__(self, values, bits):
         self.values = values
         self.timestamp = datetime.datetime.now().isoformat()
-        self.points = points
+        self.bits = bits

@@ -9,7 +9,7 @@ def n_points(request: Request) -> int:
         n = int(n)
     except ValueError:
         return -2
-    return n
+    return n * 32
     
 def nm_points(request: Request) -> int:
     #Get parameter n
@@ -22,7 +22,7 @@ def nm_points(request: Request) -> int:
         m = int(m)
     except ValueError:
         return -2
-    return n * m
+    return n * m * 32
 
 def minmax_points(request: Request) -> int:
     #Get parameter min
@@ -35,7 +35,7 @@ def minmax_points(request: Request) -> int:
         max = int(max)
     except ValueError:
         return -2
-    return max - min + 1
+    return (max - min + 1) * 32
 
 def bitmap_points(request: Request) -> int:
     #Get parameters width, height, and zoom_factor
@@ -50,4 +50,4 @@ def bitmap_points(request: Request) -> int:
     except ValueError:
         return -2
     total_pixels = width * height
-    return total_pixels // 8 + (total_pixels % 8 > 0)
+    return total_pixels

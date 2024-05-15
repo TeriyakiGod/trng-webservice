@@ -171,9 +171,9 @@ class RandomLottoSerializer(serializers.Serializer):
         return data
 
 class RandomBitmapSerializer(serializers.Serializer):
-    width = serializers.IntegerField(label="Width", help_text="Width of the bitmap (1 to 300)")
-    height = serializers.IntegerField(label="Height", help_text="Height of the bitmap (1 to 300)")
-    zoom_factor = serializers.IntegerField(label="Zoom", help_text="How many times should the image be enlarged (1 to 16). The final image resolution is width * zoom x height * zoom")
+    width = serializers.IntegerField(label="Width", help_text="Width of the bitmap (1 to 512)")
+    height = serializers.IntegerField(label="Height", help_text="Height of the bitmap (1 to 512)")
+    zoom_factor = serializers.IntegerField(label="Zoom", help_text="How many times should the image be enlarged (1 to 16). <br><br> The final image resolution is width * zoom x height * zoom. <br><br> Warning: it may take some time for the image to be generated.")
     
     def create(self, validated_data):
         return RandomBitmap(**validated_data)
@@ -181,12 +181,12 @@ class RandomBitmapSerializer(serializers.Serializer):
     def validate(self, data):
         if data['width'] < 1:
             raise serializers.ValidationError("width must be greater than 0")
-        if data['width'] > 300:
-            raise serializers.ValidationError("width must be less than 300")
+        if data['width'] > 512:
+            raise serializers.ValidationError("width must be less than 512")
         if data['height'] < 1:
             raise serializers.ValidationError("height must be greater than 0")
-        if data['height'] > 300:
-            raise serializers.ValidationError("height must be less than 300")
+        if data['height'] > 512:
+            raise serializers.ValidationError("height must be less than 512")
         if data['zoom_factor'] < 1:
             raise serializers.ValidationError("zoom_factor must be greater than 0")
         if data['zoom_factor'] > 16:

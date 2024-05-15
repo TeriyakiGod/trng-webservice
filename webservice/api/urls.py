@@ -15,6 +15,9 @@ urlpatterns = [
     path('rand/bitmap', views.rand_bitmap_view, name='rand_bitmap'),
     path('rand/color', views.rand_tool_view, {"tool": rand_tools.random_color}, name='rand_color'),
     
+    path('insufficient_points', views.insufficient_points, name='insufficient_points'),
+    path('service_unavailable', views.service_unavailable, name='service_unavailable'),
+    
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('', SpectacularSwaggerView.as_view(url_name='api:schema'), name='swagger-ui'),
 ]
