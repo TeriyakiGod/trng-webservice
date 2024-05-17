@@ -25,7 +25,7 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-ALLOWED_HOSTS = ['localhost', 'trng.kacperochnik.eu']
+ALLOWED_HOSTS = ['localhost', 'trng.kacperochnik.eu', 'teriyakiserver']
 
 # Application definition
 
