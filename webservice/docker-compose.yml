@@ -24,5 +24,5 @@ services:
     env_file:
       - ./webservice/.env
     depends_on:
-      - db
+      - trng-db
     restart: unless-stopped
