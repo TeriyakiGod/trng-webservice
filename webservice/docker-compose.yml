@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  trng-db:
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -13,14 +13,16 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-  web:
+    restart: unless-stopped
+  trng-webservice:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8001
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - "8001:8001"
     env_file:
       - ./webservice/.env
     depends_on:
       - db
+    restart: unless-stopped
