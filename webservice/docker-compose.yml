@@ -18,7 +18,7 @@ services:
   trng:
     container_name: trng-webservice
     build: .
-    command: python manage.py runserver 0.0.0.0:8001
+    command: ./migrate-and-start-server.sh
     volumes:
       - .:/code
     ports:
