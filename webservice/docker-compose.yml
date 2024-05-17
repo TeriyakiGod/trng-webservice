@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  trng-db:
+  db:
     container_name: trng-db
     image: postgres
     volumes:
@@ -9,13 +9,13 @@ services:
     env_file:
       - .env
     ports:
-      - "5432:5432"
+      - "8002:5432"
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
-  trng-webservice:
+  trng:
     container_name: trng-webservice
     build: .
     command: python manage.py runserver 0.0.0.0:8001
@@ -26,5 +26,5 @@ services:
     env_file:
       - .env
     depends_on:
-      - trng-db
+      - db
     restart: unless-stopped
