@@ -2,6 +2,7 @@ version: '3'
 
 services:
   trng-db:
+    container_name: trng-db
     image: postgres
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -15,6 +16,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
   trng-webservice:
+    container_name: trng-webservice
     build: .
     command: python manage.py runserver 0.0.0.0:8001
     volumes:
