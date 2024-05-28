@@ -81,10 +81,11 @@ sqlparse==0.4.4
 stack-data==0.6.3
 tornado==6.4
 traitlets==5.14.2
-Twisted==24.3.0
+Twisted[tls,http2]==24.3.0
 txaio==23.1.1
 typing_extensions==4.10.0
 uritemplate==4.1.1
 urllib3==2.2.1
 wcwidth==0.2.13
 zope.interface==6.2
+whitenoise==6.6.0

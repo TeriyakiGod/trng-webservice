@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     container_name: trng-db
@@ -16,19 +14,24 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
     networks:
-      - server-network
+      - teriyaki_network
   trng:
     container_name: trng-webservice
     build: .
-    command: ./migrate-and-start-server.sh
+    command: ./start-server.sh
     volumes:
       - .:/code
     ports:
-      - "8001:8001"
+      - "8003:8003"
     env_file:
       - .env
     depends_on:
       - db
     restart: unless-stopped
     networks:
-      - server-network
+      - teriyaki_network
+
+networks:
+  teriyaki_network:
+    driver: bridge
+    external: true

@@ -25,7 +25,7 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-ALLOWED_HOSTS = ['localhost', 'trng.kacperochnik.eu', 'teriyakiserver', 'kacperochnik.ddns.net']
+ALLOWED_HOSTS = ['localhost', 'trng.kacperochnik.eu', 'teriyakiserver']
 
 # Application definition
 
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'webapp.middleware.VisitorMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'webservice.urls'
@@ -131,11 +132,9 @@ LOGIN_REDIRECT_URL = '/auth/account'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "../static"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
