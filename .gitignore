@@ -10,3 +10,4 @@ doc
 .mypy_cache
 migrations
 data
+db.sqlite3

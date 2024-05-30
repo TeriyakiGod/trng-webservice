@@ -23,6 +23,3 @@ class TrngConsumer(WebsocketConsumer):
             random_number: c_uint32 = struct.unpack('<I', bytes_data)[0]
             # Add the random number to the buffer
             TrngConsumer.buffer.appendleft(random_number)
-            logger.info(sys.getsizeof(self.buffer))
-        else:
-            logger.warning("Did not receive any bytes_data. Ignoring.")

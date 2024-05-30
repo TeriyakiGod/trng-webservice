@@ -2,21 +2,22 @@ services:
   db:
     container_name: trng-db
     image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
     env_file:
       - .env
     ports:
-      - "8002:5432"
+      - "5432:5432"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data/
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     restart: unless-stopped
-    networks:
-      - teriyaki_network
-  trng:
-    container_name: trng-webservice
+    # networks:
+    #   - teriyaki_network
+
+  app:
+    container_name: trng-app
     build: .
     command: ./start-server.sh
     volumes:
@@ -28,10 +29,10 @@ services:
     depends_on:
       - db
     restart: unless-stopped
-    networks:
-      - teriyaki_network
+    # networks:
+    #   - teriyaki_network
 
-networks:
-  teriyaki_network:
-    driver: bridge
-    external: true
+    # networks:
+    #   teriyaki_network:
+    #     driver: bridge
+    #     external: true

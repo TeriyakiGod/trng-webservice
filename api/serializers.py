@@ -173,7 +173,7 @@ class RandomLottoSerializer(serializers.Serializer):
 class RandomBitmapSerializer(serializers.Serializer):
     width = serializers.IntegerField(label="Width", help_text="Width of the bitmap (1 to 512)")
     height = serializers.IntegerField(label="Height", help_text="Height of the bitmap (1 to 512)")
-    zoom_factor = serializers.IntegerField(label="Zoom", help_text="How many times should the image be enlarged (1 to 16). <br><br> The final image resolution is width * zoom x height * zoom. <br><br> Warning: it may take some time for the image to be generated.")
+    zoom_factor = serializers.IntegerField(label="Zoom", help_text="How many times should the image be enlarged (1 to 16). <br><br> The final image resolution is width * zoom x height * zoom. <br><br> <div class='alert alert-warning' role='alert'>Warning: it may take some time for the image to be generated.</div>")
     
     def create(self, validated_data):
         return RandomBitmap(**validated_data)
