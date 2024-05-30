@@ -27,13 +27,12 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    networks:
+      - teriyaki_network
   # depends_on:
   #   - db
 
-  #     networks:
-  #       - teriyaki_network
-
-  # networks:
-  #   teriyaki_network:
-  #     driver: bridge
-  #     external: true
+networks:
+  teriyaki_network:
+    driver: bridge
+    external: true
