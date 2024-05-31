@@ -1,4 +1,3 @@
-from numpy import byte
 from trng.interface import rng
 from PIL import Image
 from . import UINT32_MAX
@@ -35,7 +34,8 @@ async def random_to_bytes(n: int) -> bytes:
     remainder = n % 4
     if remainder > 0:
         x = await rng()
-        byte_array.extend(x.to_bytes(remainder, 'little'))
+        remainder_bytes = x.to_bytes(4, 'little')[:remainder]
+        byte_array.extend(remainder_bytes)
     return bytes(byte_array)
 
 ## @brief This function generates a list of random integers within a given range.
