@@ -18,5 +18,6 @@ urlpatterns = [
     path("rand_bitmap/", views.random_tool_form_view, name="rand_bitmap", kwargs={"tool": rand_tools.random_bitmap}),
     path("rand_color/", views.random_tool_form_view, name="rand_color", kwargs={"tool": rand_tools.random_color}),
     path("privacy-policy/", views.template_view, name="privacy_policy", kwargs={"template": "privacy_policy.html"}),
+    path("terms-of-service/", views.template_view, name="terms_of_service", kwargs={"template": "tos.html"}),
 ]
 
