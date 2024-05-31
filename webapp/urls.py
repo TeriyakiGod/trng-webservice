@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
 from api import rand_tools
-
 app_name = 'webapp'
 
 urlpatterns = [
@@ -18,5 +17,6 @@ urlpatterns = [
     path("rand_lotto/", views.random_tool_form_view, name="rand_lotto", kwargs={"tool": rand_tools.random_lotto}),
     path("rand_bitmap/", views.random_tool_form_view, name="rand_bitmap", kwargs={"tool": rand_tools.random_bitmap}),
     path("rand_color/", views.random_tool_form_view, name="rand_color", kwargs={"tool": rand_tools.random_color}),
+    path("privacy-policy/", views.template_view, name="privacy_policy", kwargs={"template": "privacy_policy.html"}),
 ]
 
