@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rand_tools>
+    <rand_tool>
+        <name>Integer</name>
+        <path>rand_int</path>
+        <short_description>Generate random integers</short_description>
+        <description>This tool generates random integers within a specified range.</description>
+        <category>Numbers</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Float</name>
+        <path>rand_float</path>
+        <short_description>Generate random floating point numbers</short_description>
+        <description>This tool generates random floating point numbers within a specified range.</description>
+        <category>Numbers</category>
+    </rand_tool>
+    <rand_tool>
+        <name>String</name>
+        <path>rand_string</path>
+        <short_description>Generate random strings</short_description>
+        <description>This tool generates random strings of a specified length.</description>
+        <category>Other</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Bytes</name>
+        <path>rand_bytes</path>
+        <short_description>Generate random bytes</short_description>
+        <description>This tool generates random bytes of a specified length.</description>
+        <category>Numbers</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Sequence</name>
+        <path>rand_sequence</path>
+        <short_description>Generate random sequence</short_description>
+        <description>This tool generates numbers in specified range in a random order.</description>
+        <category>Numbers</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Coin flip</name>
+        <path>rand_coin</path>
+        <short_description>Flip coins</short_description>
+        <description>This tool simulates flipping coins.</description>
+        <category>Games</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Dice roll</name>
+        <path>rand_dice</path>
+        <short_description>Roll dice</short_description>
+        <description>This tool simulates rolling dice. U can select number of dice and sides.</description>
+        <category>Games</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Lotto</name>
+        <path>rand_lotto</path>
+        <short_description>Generate lotto numbers</short_description>
+        <description>This tool generates random lotto numbers. 6 random numbers between 1 and 49.</description>
+        <category>Games</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Bitmap</name>
+        <path>rand_bitmap</path>
+        <short_description>Generate random bitmaps</short_description>
+        <description>This tool generates random bitmaps.</description>
+        <category>Other</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Color</name>
+        <path>rand_color</path>
+        <short_description>Generate random colors</short_description>
+        <description>This tool generates random colors.</description>
+        <category>Other</category>
+    </rand_tool>
+</rand_tools>
