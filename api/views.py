@@ -43,8 +43,7 @@ def rand_tool_view(request: Request, tool: rand_tools.RandomTool):
         
 @api_view(['GET'])
 @renderer_classes((ImageRenderer,))
-def rand_bitmap_view(request: Request):
-    tool = rand_tools.random_bitmap
+def rand_bitmap_view(request: Request, tool: rand_tools.RandomTool):
     serialized_request = tool.serializer(data=request.query_params)
     if serialized_request.is_valid(raise_exception=True):
         validated_data = getattr(serialized_request, 'validated_data', None)

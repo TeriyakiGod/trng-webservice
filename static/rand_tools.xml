@@ -57,11 +57,25 @@
         <category>Games</category>
     </rand_tool>
     <rand_tool>
-        <name>Bitmap</name>
+        <name>Bitmap (b&#38;w)</name>
         <path>rand_bitmap</path>
         <short_description>Generate random bitmaps</short_description>
-        <description>This tool generates random bitmaps.</description>
-        <category>Other</category>
+        <description>This tool generates random bitmaps. Each pixel holds a value of 0 (black) or 1 (white)</description>
+        <category>Image</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Bitmap (grayscale)</name>
+        <path>rand_bitmap_gray</path>
+        <short_description>Generate random grayscale bitmaps</short_description>
+        <description>This tool generates rando grayscale bitmaps. Each pixel holds a grayscale value between 0 and 255.</description>
+        <category>Image</category>
+    </rand_tool>
+    <rand_tool>
+        <name>Bitmap (color)</name>
+        <path>rand_bitmap_color</path>
+        <short_description>Generate random rgb bitmaps</short_description>
+        <description>This tool generates rando rgb bitmaps. Each pixel holds 3 values: Red, Green, Blue. Each value is one byte (0 - 255).</description>
+        <category>Image</category>
     </rand_tool>
     <rand_tool>
         <name>Color</name>

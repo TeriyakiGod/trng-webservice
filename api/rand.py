@@ -1,6 +1,7 @@
 from trng.interface import rng
 from PIL import Image
 from . import UINT32_MAX
+import numpy as np
 
 ## @brief This function scales uint32 random numbers to an integer within a given range using Lemire's Method: Debiased Integer Multiplication. 
 #  @param range The range within which to generate the random integer.
@@ -147,9 +148,6 @@ async def get_lotto(n: int) -> list[list[int]]:
     
 
 async def get_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
-    # Create a new image with the enlarged size
-    img = Image.new('1', (width * zoom_factor, height * zoom_factor))
-    
     # Calculate the total number of pixels
     total_pixels = width * height
 
@@ -157,18 +155,62 @@ async def get_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
     random_bytes = await random_to_bytes(total_pixels // 8 + (total_pixels % 8 > 0))
 
     # Convert the bytes to a bit array
-    bit_array = [bool(int(b)) for b in bin(int.from_bytes(random_bytes, 'big'))[2:].zfill(total_pixels)]
+    bit_array = np.unpackbits(np.frombuffer(random_bytes, dtype=np.uint8))
 
-    # Generate random pixels based on zoom factor
-    bit_index = 0
-    for y in range(height):
-        for x in range(width):
-            pixel_value = bit_array[bit_index]
-            bit_index += 1
-            # Set the pixels in the enlarged image
-            for i in range(zoom_factor):
-                for j in range(zoom_factor):
-                    img.putpixel((x * zoom_factor + i, y * zoom_factor + j), pixel_value)
+    # Reshape the bit array to match the image dimensions
+    bit_array = bit_array[:width*height].reshape((height, width))
+
+    # Repeat the rows and columns based on the zoom factor
+    bit_array = np.repeat(np.repeat(bit_array, zoom_factor, axis=0), zoom_factor, axis=1)
+
+    # Create a new image from the bit array
+    img = Image.fromarray(np.uint8(bit_array)*255, 'L')
+
+    return img
+
+async def get_grayscale_bitmap(width: int, height: int, zoom_factor: int) -> Image.Image:
+    # Calculate the total number of pixels
+    total_pixels = width * height
+
+    # Generate random bytes
+    byte_array = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+
+    # Reshape the byte array to match the image dimensions
+    byte_array = byte_array.reshape((height, width))
+
+    # Repeat the rows and columns based on the zoom factor
+    byte_array = np.repeat(np.repeat(byte_array, zoom_factor, axis=0), zoom_factor, axis=1)
+
+    # Create a new image from the byte array
+    img = Image.fromarray(byte_array, mode='L')
+
+    return img
+
+async def get_rgb_noise_image(width: int, height: int, zoom_factor: int) -> Image.Image:
+    # Calculate the total number of pixels
+    total_pixels = width * height
+
+    # Generate random bytes for each color channel
+    red_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+    green_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+    blue_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+
+    # Reshape the byte arrays to match the image dimensions
+    red_channel = red_channel.reshape((height, width))
+    green_channel = green_channel.reshape((height, width))
+    blue_channel = blue_channel.reshape((height, width))
+
+    # Repeat the rows and columns based on the zoom factor
+    red_channel = np.repeat(np.repeat(red_channel, zoom_factor, axis=0), zoom_factor, axis=1)
+    green_channel = np.repeat(np.repeat(green_channel, zoom_factor, axis=0), zoom_factor, axis=1)
+    blue_channel = np.repeat(np.repeat(blue_channel, zoom_factor, axis=0), zoom_factor, axis=1)
+
+    # Stack the color channels to create an RGB image
+    rgb_image = np.dstack((red_channel, green_channel, blue_channel))
+
+    # Create a new image from the RGB array
+    img = Image.fromarray(rgb_image, 'RGB')
+
     return img
 
 async def get_colors(n: int) -> list[str]:
