@@ -173,7 +173,7 @@ async def get_grayscale_bitmap(width: int, height: int, zoom_factor: int) -> Ima
     total_pixels = width * height
 
     # Generate random bytes
-    byte_array = np.array([random_to_bytes(1) for _ in range(total_pixels)], dtype=np.uint8)
+    byte_array = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
 
     # Reshape the byte array to match the image dimensions
     byte_array = byte_array.reshape((height, width))
@@ -191,9 +191,9 @@ async def get_rgb_noise_image(width: int, height: int, zoom_factor: int) -> Imag
     total_pixels = width * height
 
     # Generate random bytes for each color channel
-    red_channel = np.array([random_to_bytes(1) for _ in range(total_pixels)], dtype=np.uint8)
-    green_channel = np.array([random_to_bytes(1) for _ in range(total_pixels)], dtype=np.uint8)
-    blue_channel = np.array([random_to_bytes(1) for _ in range(total_pixels)], dtype=np.uint8)
+    red_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+    green_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
+    blue_channel = np.array([int.from_bytes(await random_to_bytes(1), 'big') for _ in range(total_pixels)], dtype=np.uint8)
 
     # Reshape the byte arrays to match the image dimensions
     red_channel = red_channel.reshape((height, width))

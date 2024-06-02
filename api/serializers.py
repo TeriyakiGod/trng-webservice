@@ -1,4 +1,3 @@
-from turtle import width
 from rest_framework import serializers
 from . import UINT32_MAX
 from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap, RandomColor

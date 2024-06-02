@@ -12,8 +12,10 @@ urlpatterns = [
     path('rand/coin', views.rand_tool_view, {"tool": rand_tools.random_coin}, name='rand_coin'),
     path('rand/dice', views.rand_tool_view, {"tool": rand_tools.random_dice}, name='rand_dice'),
     path('rand/lotto', views.rand_tool_view, {"tool": rand_tools.random_lotto}, name='rand_lotto'),
-    path('rand/bitmap', views.rand_bitmap_view, name='rand_bitmap'),
+    path('rand/bitmap', views.rand_bitmap_view, {"tool": rand_tools.random_bitmap}, name='rand_bitmap'),
     path('rand/color', views.rand_tool_view, {"tool": rand_tools.random_color}, name='rand_color'),
+    path('rand/bitmap/gray', views.rand_bitmap_view, {"tool": rand_tools.random_bitmap_gray}, name='rand_bitmap_gray'),
+    path('rand/bitmap/color', views.rand_bitmap_view, {"tool": rand_tools.random_bitmap_color}, name='rand_bitmap_color'),
     
     path('insufficient_points', views.insufficient_points, name='insufficient_points'),
     path('service_unavailable', views.service_unavailable, name='service_unavailable'),

@@ -21,6 +21,8 @@ random_dice = RandomTool("rand_dice",rand.get_dice_rolls, serializers.RandomDice
 random_lotto = RandomTool("rand_lotto",rand.get_lotto, serializers.RandomLottoSerializer, models.RandomLotto, points.n_points)
 random_bitmap = RandomTool("rand_bitmap",rand.get_bitmap, serializers.RandomBitmapSerializer, models.RandomBitmap, points.bitmap_points)
 random_color = RandomTool("rand_color",rand.get_colors, serializers.RandomColorSerializer, models.RandomColor, points.n_points)
+random_bitmap_gray = RandomTool("rand_bitmap_gray",rand.get_grayscale_bitmap, serializers.RandomBitmapSerializer, models.RandomBitmap, points.bitmap_points)
+random_bitmap_color = RandomTool("rand_bitmap_color",rand.get_rgb_noise_image, serializers.RandomBitmapSerializer, models.RandomBitmap, points.bitmap_points)
 
         
 
