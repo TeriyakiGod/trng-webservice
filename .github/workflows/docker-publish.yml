@@ -81,8 +81,6 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             ${{ env.DOCKER_HUB_REGISTRY }}/${{ env.DOCKER_HUB_IMAGE_NAME }}
           tags: |
-            type=ref,event=branch,branch=main
-            type=ref,event=tag
             type=raw,value=latest
 
       # Build and push Docker image with Buildx (don't push on PR)
