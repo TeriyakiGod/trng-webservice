@@ -1,8 +1,10 @@
 services:
   app:
     container_name: trng-webservice
-    image: teriyakigod/trng-webservice:latest
-    command: ./start-server.sh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /code/start-server.sh
     volumes:
       - .:/code
     ports:
