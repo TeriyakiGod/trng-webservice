@@ -6,12 +6,10 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework.request import Request
 from asgiref.sync import async_to_sync
-from . import rand, serializers, rand_tools
+from . import rand_tools
 from .exceptions import ServiceUnavailable
 from rest_framework.exceptions import PermissionDenied
 from .renderers import ImageRenderer
-from rest_framework.renderers import TemplateHTMLRenderer
-from . import logger
 from webapp.models import Profile, Visitor
 
 
