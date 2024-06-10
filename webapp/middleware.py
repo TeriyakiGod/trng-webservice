@@ -6,7 +6,11 @@ class VisitorMiddleware:
 
     def __call__(self, request):
         if not request.user.is_authenticated:
-            ip_address = request.META.get('REMOTE_ADDR')
+            x_forwarded_for = request.META.get('X-Forwarded-For')
+            if x_forwarded_for:
+                ip_address = x_forwarded_for.split(',')[0]
+            else:
+                ip_address = request.META.get('REMOTE_ADDR')
             visitor, created = Visitor.objects.get_or_create(ip=ip_address)
             request.visitor = visitor
 
