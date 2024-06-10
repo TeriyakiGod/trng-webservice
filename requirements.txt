@@ -79,7 +79,7 @@ simplejson==3.19.2
 six==1.16.0
 sqlparse==0.5.0
 stack-data==0.6.3
-tornado==6.4
+tornado==6.4.1
 traitlets==5.14.2
 Twisted[tls,http2]==24.3.0
 txaio==23.1.1
