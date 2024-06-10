@@ -60,7 +60,7 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: teriyakigod/trng-webservice
+          subject-name: ghcr.io/teriyakigod/trng-webservice
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
       
