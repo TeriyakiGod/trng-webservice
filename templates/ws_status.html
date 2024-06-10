@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 mb-3">
+        TRNG STATUS
+        {% if online %}
+        <span class="text-success"> • Online</span>
+        {% else %}
+        <span class="text-danger"> • Offline</span>
+        {% endif %}
+    </h2>
+    <div class="container">
+        <h3>Connected generators:</h3>
+        <ul>
+            {% for generator in generators %}
+            <li class="list-group-item">
+                {% if generator.online %}
+                <span class="text-success">• Online </span>
+                {% else %}
+                <span class="text-danger">• Offline </span>
+                {% endif %}
+                <span>{{generator.ip}} {{ generator.country }}, {{ generator.city }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
