@@ -18,14 +18,14 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 63072000  # Two years
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_SECONDS = 63072000  # Two years
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['trng.kacperochnik.eu']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -213,3 +213,12 @@ LOGGING = {
         },
     },
 }
+
+# Email backend configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mailserver'  # Use the container name or IP address
+EMAIL_PORT = 465  # Default SMTP port; adjust if your mail server uses a different port
+EMAIL_USE_TLS = True  # Set to True if your mail server requires TLS
+# If your mail server requires authentication, add these as well:
+EMAIL_HOST_USER = 'admin@kacperochnik.eu'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
