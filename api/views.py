@@ -12,7 +12,6 @@ from rest_framework.exceptions import PermissionDenied
 from .renderers import ImageRenderer
 from webapp.models import Profile, Visitor
 
-
 @api_view(['GET'])
 def rand_tool_view(request: Request, tool: rand_tools.RandomTool):
     serialized_request = tool.serializer(data=request.query_params)
@@ -38,7 +37,7 @@ def rand_tool_view(request: Request, tool: rand_tools.RandomTool):
             except asyncio.TimeoutError:
                 raise ServiceUnavailable()
             return Response(data=vars(result), template_name="random_result.html")
-        
+
 @api_view(['GET'])
 @renderer_classes((ImageRenderer,))
 def rand_bitmap_view(request: Request, tool: rand_tools.RandomTool):
@@ -65,7 +64,7 @@ def rand_bitmap_view(request: Request, tool: rand_tools.RandomTool):
             except asyncio.TimeoutError:
                 return redirect(service_unavailable)
             return Response(bitmap)
-        
+
 @api_view(['GET'])
 def insufficient_points(request: Request):
     points = request.query_params.get('points')

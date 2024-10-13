@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  title: TRNG Webservice API
+  description: A set of endpoints for generating random numbers, strings, bytes, sequences, and more.
+  version: 1.0.0
+servers:
+  - url: https://trng.kacperochnik.eu
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+security:
+  - basicAuth: []
+  - sessionAuth: []
+responses:
+  ServiceUnavailable:
+    description: The service is currently unavailable.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            detail:
+              type: string
+              example: "Service temporarily unavailable, try again later."
+  SuccessfulResponse:
+    description: Successful response with random values.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            values:
+              type: array
+              items:
+                type: integer
+              description: The list of random values generated.
+            timestamp:
+              type: string
+              format: date-time
+              description: The timestamp when the random values were generated.
+            bits:
+              type: integer
+              description: The total number of random bits used in the generation.
+
+paths:
+  /api/rand/int:
+    get:
+      summary: Generate random integers
+      description: Returns a list of random integers.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of random integers to generate.
+        - name: min
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Minimum value for random integers.
+        - name: max
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Maximum value for random integers.
+        - name: repeat
+          in: query
+          schema:
+            type: boolean
+          description: Allow repeating numbers in the generated list.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/float:
+    get:
+      summary: Generate random floats
+      description: Returns a list of random floats.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of random floats to generate.
+        - name: precision
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Decimal precision for the random floats.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/string:
+    get:
+      summary: Generate random strings
+      description: Returns a list of random strings.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of random strings to generate.
+        - name: m
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Length of each random string.
+        - name: digits
+          in: query
+          schema:
+            type: boolean
+          description: Include digits in the string.
+        - name: letters
+          in: query
+          schema:
+            type: boolean
+          description: Include letters in the string.
+        - name: special
+          in: query
+          schema:
+            type: boolean
+          description: Include special characters in the string.
+        - name: repeat
+          in: query
+          schema:
+            type: boolean
+          description: Allow repeating characters in the string.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/bytes:
+    get:
+      summary: Generate random bytes
+      description: Returns a list of random bytes.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of bytes to generate.
+        - name: f
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Output format (e.g., 'h' for hexadecimal).
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/sequence:
+    get:
+      summary: Generate a random sequence
+      description: Returns a random sequence of numbers within a given range.
+      parameters:
+        - name: min
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Minimum value of the sequence.
+        - name: max
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Maximum value of the sequence.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/coin:
+    get:
+      summary: Simulate coin tosses
+      description: Returns the results of a random coin toss.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of coin tosses.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/dice:
+    get:
+      summary: Roll random dice
+      description: Returns random dice roll results.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of dice to roll.
+        - name: m
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of sides on each die.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/lotto:
+    get:
+      summary: Generate random lotto numbers
+      description: Returns a set of random lotto numbers.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of random lotto numbers to generate.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/bitmap:
+    get:
+      summary: Generate a random bitmap
+      description: Returns a random bitmap image.
+      parameters:
+        - name: width
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Width of the bitmap.
+        - name: height
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Height of the bitmap.
+        - name: zoom_factor
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Zoom factor for the bitmap.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/bitmap/gray:
+    get:
+      summary: Generate a grayscale random bitmap
+      description: Returns a grayscale random bitmap image.
+      parameters:
+        - name: width
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Width of the bitmap.
+        - name: height
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Height of the bitmap.
+        - name: zoom_factor
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Zoom factor for the bitmap.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/bitmap/color:
+    get:
+      summary: Generate a color random bitmap
+      description: Returns a color random bitmap image.
+      parameters:
+        - name: width
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Width of the bitmap.
+        - name: height
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Height of the bitmap.
+        - name: zoom_factor
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Zoom factor for the bitmap.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'
+
+  /api/rand/color:
+    get:
+      summary: Generate random colors
+      description: Returns a list of random colors.
+      parameters:
+        - name: n
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Number of random colors to generate.
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulResponse'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '403':
+          $ref: '#/components/responses/PermissionDenied'

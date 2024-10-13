@@ -1,5 +1,4 @@
 from .models import RandTool, Visitor
-from . import logger
 
 def rand_tools(request):
     tools = RandTool.objects.all()
