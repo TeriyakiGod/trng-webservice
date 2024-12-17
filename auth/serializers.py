@@ -3,8 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class UserRegisterSerializer(serializers.Serializer):
-    username = serializers.CharField(required=True, min_length=5,max_length=30, help_text="All alphanumeric characters allowed, must be between 5 and 30 characters long.", style={'placeholder': 'Enter username'})
-    email = serializers.EmailField(required=True, help_text="Enter a valid email address.",style={'placeholder': 'Enter email', 'input_type': 'email'})
+    username = serializers.CharField(required=True, min_length=5,max_length=30, help_text="All alphanumeric characters allowed, must be between 5 and 30 characters long.", style={'input_type': 'text'})
+    email = serializers.EmailField(required=True, help_text="Enter a valid email address.",style={'input_type': 'email'})
     password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     confirm_password = serializers.CharField(required=True, write_only=True,style={'input_type': 'password'})
 

@@ -1,9 +1,13 @@
+import random
+from django.conf import settings
 from .consumers import TrngConsumer
 import asyncio
 
 ## @brief This function returns a random number from a circular buffer that is filled by the websocket consumer.
 #  @return A random integer in range from 0 to 4294967295.
 async def rng() -> int:
+    if settings.DEBUG:
+        return random.randint(0, 4294967295)
     i=0
     # Wait for the buffer to fill if it's empty
     while not TrngConsumer.buffer:

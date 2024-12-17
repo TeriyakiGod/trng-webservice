@@ -80,7 +80,7 @@ class AccountView(APIView):
         if not user.is_active:
             return redirect('/auth/check-email/')
         else:
-            profile = Profile.objects.get(user=request.user)
+            profile = Profile.objects.get(user=user)
             return Response({"profile": profile}, template_name="account.html")
         
 class LoginView(APIView):
@@ -108,3 +108,9 @@ class LogoutView(APIView):
         logout(request)
         return Response(template_name="logged_out.html")
         
+class ResetPasswordView(APIView):
+    def post(self, request):
+        raise NotImplementedError()
+    
+    def get(self, request):
+        raise NotImplementedError()

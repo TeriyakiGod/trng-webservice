@@ -1,22 +1,17 @@
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Load environment variables from .env file
-dotenv_path = os.path.join(BASE_DIR, '.env')
-load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', "REPLACE_ME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
@@ -25,7 +20,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_SECONDS = 63072000  # Two years
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['*'])
 
 # Application definition
 
@@ -52,7 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'webapp.middleware.VisitorMiddleware',
+    'api.middleware.VisitorMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
@@ -203,12 +198,11 @@ LOGGING = {
 
 # Email backend configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mailserver'  # Use the container name or IP address
-EMAIL_PORT = 465  # Default SMTP port; adjust if your mail server uses a different port
-EMAIL_USE_TLS = True  # Set to True if your mail server requires TLS
-# If your mail server requires authentication, add these as well:
-EMAIL_HOST_USER = 'admin@kacperochnik.eu'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+EMAIL_HOST = os.getenv('TRNG_WEBSERVICE_EMAIL_HOST', "host@localhost.com")
+EMAIL_PORT = int(os.getenv('TRNG_WEBSERVICE_EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('TRNG_WEBSERVICE_EMAIL_USE_TLS', 'False').lower() in ('true', '1', 't')
+EMAIL_HOST_USER = os.getenv('TRNG_WEBSERVICE_EMAIL_USER', "user")
+EMAIL_HOST_PASSWORD = os.getenv('TRNG_WEBSERVICE_EMAIL_PASSWORD', "password")
 
 CACHES = {
     'default': {

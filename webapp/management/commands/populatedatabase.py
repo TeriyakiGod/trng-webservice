@@ -1,7 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
 from django.core.management.base import BaseCommand
-from matplotlib import category
 from ...models import RandTool
 
 class Command(BaseCommand):

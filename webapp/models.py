@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class RandTool(models.Model):
     name = models.CharField(max_length=100)
@@ -9,10 +12,6 @@ class RandTool(models.Model):
 
     def __str__(self):
         return self.name
-    
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
