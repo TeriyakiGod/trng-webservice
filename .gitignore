@@ -8,7 +8,6 @@ __pycache__
 random_numbers*
 doc
 .mypy_cache
-migrations
 data
 db.sqlite3
 tmp
