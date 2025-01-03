@@ -80,7 +80,7 @@ class AccountView(APIView):
         if not user.is_active:
             return redirect('/auth/check-email/')
         else:
-            profile = Profile.objects.get(user=user)
+            profile = request.profile
             return Response({"profile": profile}, template_name="account.html")
         
 class LoginView(APIView):
