@@ -11,3 +11,4 @@ doc
 migrations
 data
 db.sqlite3
+tmp

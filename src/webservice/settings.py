@@ -8,19 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', "REPLACE_ME")
+SECRET_KEY = os.getenv('TRNG_WEBSERVICE_SECRET_KEY', "REPLACE_ME")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
+DEBUG = os.getenv('TRNG_WEBSERVICE_DEBUG', 'False').lower() in ('true', '1', 't')
 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_HSTS_PRELOAD = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_SECONDS = 63072000  # Two years
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', ['*'])
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 63072000  # Two years
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', [os.getenv('TRNG_WEBSERVICE_DOMAIN', '*')])
 
 # Application definition
 
@@ -137,7 +137,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = "/static/"
+if not DEBUG:
+    STATIC_ROOT = f"/var/www/{os.getenv('TRNG_WEBSERVICE_DOMAIN', 'tmp')}"
+else:
+    STATIC_ROOT = BASE_DIR / "tmp/static"
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
