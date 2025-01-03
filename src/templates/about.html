@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="container">
+        <h2 class="mt-3">About</h2>
+        <blockquote class="blockquote">
+            <p class="">TRNG Web Service employs advanced algorithms and hardware to generate truly unpredictable
+                numbers,
+                crucial for
+                cryptography, simulations, and gaming applications. With its robust architecture, it ensures
+                high-quality random numbers
+                that pass stringent statistical tests for randomness. Users can access this service via an intuitive
+                web
+                interface or
+                integrate it seamlessly into their applications through APIs.
+            </p>
+        </blockquote>
+        <p>For my Engineering Thesis, I delved deep into the intricate workings of random number generation,
+            exploring various
+            methodologies and algorithms. Developing TRNG Web Service was not only a challenging technical
+            endeavor
+            but also a
+            rewarding experience, as it bridges the theoretical foundations of randomness with practical
+            applications. Through
+            meticulous research and rigorous testing, I aimed to create a reliable tool that contributes to the
+            security and
+            efficiency of diverse technological domains. TRNG Web Service stands as a testament to my dedication
+            to
+            advancing the
+            field of random number generation and its pivotal role in modern computing.
+        </p>
+    </div>
+    <div class="container">
+        <h2 class="mt-3">How does it work?</h2>
+        {% load static %}
+        <img src="{% static 'img/diagram.webp' %}" alt="Diagram of the system">
+        <p>Fig 1. This diagram represents the structure of trng web service.</p>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="jumbotron mt-3">
+        <h1 class="display-4 text-center">Welcome to TRNG Web Service!</h1>
+        <p class="lead text-center">We are serving True Random Numbers to anyone on the internet.</p>
+        <hr class="my-4">
+        <div class="container">
+            <div class="row">
+                {% for tool in rand_tools %}
+                <div class="col-12 col-md-4 mb-4 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <a href="{% url 'app:'|add:tool.path %}">
+                                <h5 class="card-title">{{ tool.name }}</h5>
+                            </a>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ tool.category }}</h6>
+                            <p class="card-text">{{ tool.short_description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

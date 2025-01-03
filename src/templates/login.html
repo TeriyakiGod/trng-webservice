@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load rest_framework %}
+
+{% block content %}
+  <div class="container mt-3">
+    <div class="container">
+      <h2>Welcome visitor!</h2>
+      <h4>You have {{ visitor.points }} bits to spend.</h4>
+    </div>
+    <div class="container">
+      <h2 class="mt-4 mb-3">Login</h2>
+      <p class="lead">Please login to your account</p>
+      <div class="container">
+        <form action="" method="post" class="form-group d-flex flex-column gap-4">
+          {% csrf_token %}
+          {% render_form serializer %}
+          <div class="d-flex bd-highlight">
+            <div class="me-auto bd-highlight">
+              <a href="/auth/forgot-password" class="btn disabled">Forgot Password</a>
+            </div>
+            <div class="bd-highlight">
+              <a href="/auth/register/" class="btn btn-primary">Register</a>
+            </div>
+            <div class="bd-highlight ps-2">
+              <input type="submit" value="Login" class="btn btn-success" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
