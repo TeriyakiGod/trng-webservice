@@ -12,7 +12,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model, authenticate, logout, login
 
-    
+# TODO: FIX registering
 class RegisterView(APIView):
     def get(self, request):
         form = User()
@@ -101,7 +101,7 @@ class LoginView(APIView):
     def get(self, request):
         form = User()
         serializer = UserLoginSerializer(form)
-        return Response({"serializer": serializer}, template_name="login.html")
+        return Response({"serializer": serializer, "profile": request.profile}, template_name="login.html")
     
 class LogoutView(APIView):
     def post(self, request):

@@ -207,6 +207,17 @@ EMAIL_USE_TLS = os.getenv('TRNG_WEBSERVICE_EMAIL_USE_TLS', 'False').lower() in (
 EMAIL_HOST_USER = os.getenv('TRNG_WEBSERVICE_EMAIL_USER', "user")
 EMAIL_HOST_PASSWORD = os.getenv('TRNG_WEBSERVICE_EMAIL_PASSWORD', "password")
 
+ADMIN_USER_NAME=os.getenv("ADMIN_USER_NAME", default="Admin user")
+ADMIN_USER_EMAIL=os.getenv("ADMIN_USER_EMAIL", default=None)
+
+MANAGERS=[]
+ADMINS=[]
+if all([ADMIN_USER_NAME, ADMIN_USER_EMAIL]):
+    ADMINS +=[
+        (f'{ADMIN_USER_NAME}', f'{ADMIN_USER_EMAIL}')
+    ]
+    MANAGERS=ADMINS
+
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
