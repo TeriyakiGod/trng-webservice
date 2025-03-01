@@ -15,6 +15,9 @@
         <form action="" method="post" class="form-group d-flex flex-column gap-4">
           {% csrf_token %}
           {% render_form serializer %}
+          {% if invalid %}
+          <span style="color: red;">Invalid username or password</span>
+          {% endif %}
           <div class="d-flex bd-highlight">
             <div class="me-auto bd-highlight">
               <a href="/auth/forgot-password" class="btn disabled">Forgot Password</a>
