@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'webapp',
     'api',
     'trng'
@@ -151,8 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny',],
     'DEFAULT_PARSER_CLASSES': [
@@ -206,6 +207,17 @@ EMAIL_PORT = int(os.getenv('TRNG_WEBSERVICE_EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.getenv('TRNG_WEBSERVICE_EMAIL_USE_TLS', 'False').lower() in ('true', '1', 't')
 EMAIL_HOST_USER = os.getenv('TRNG_WEBSERVICE_EMAIL_USER', "user")
 EMAIL_HOST_PASSWORD = os.getenv('TRNG_WEBSERVICE_EMAIL_PASSWORD', "password")
+
+ADMIN_USER_NAME=os.getenv("ADMIN_USER_NAME", default="Admin user")
+ADMIN_USER_EMAIL=os.getenv("ADMIN_USER_EMAIL", default=None)
+
+MANAGERS=[]
+ADMINS=[]
+if all([ADMIN_USER_NAME, ADMIN_USER_EMAIL]):
+    ADMINS +=[
+        (f'{ADMIN_USER_NAME}', f'{ADMIN_USER_EMAIL}')
+    ]
+    MANAGERS=ADMINS
 
 CACHES = {
     'default': {

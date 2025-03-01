@@ -9,7 +9,7 @@
     <div class="container">
       <form action="/auth/register/" method="post" class="form-group d-flex flex-column gap-4">
         {% csrf_token %}
-        {% render_form serializer %}
+        {% render_form serializer template_pack='rest_framework/vertical' %}
         <div class="d-flex justify-content-between">
           <a href="javascript:history.back()" class="btn btn-primary">Go Back</a>
           <input type="submit" value="Register" class="btn btn-success" />
