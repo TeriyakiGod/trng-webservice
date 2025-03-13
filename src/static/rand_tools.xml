@@ -84,4 +84,11 @@
         <description>This tool generates random colors.</description>
         <category>Other</category>
     </rand_tool>
+        <rand_tool>
+        <name>Raw</name>
+        <path>rand_raw</path>
+        <short_description>Generate random raw binary data</short_description>
+        <description>This tool generates random binary data.</description>
+        <category>Other</category>
+    </rand_tool>
 </rand_tools>

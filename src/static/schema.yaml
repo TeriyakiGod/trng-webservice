@@ -7,16 +7,16 @@ servers:
   - url: https://trng.kacperochnik.eu
 components:
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
     sessionAuth:
       type: apiKey
       in: cookie
       name: sessionid
+    apiToken:
+      type: apiKey
+      in: header
 security:
-  - basicAuth: []
   - sessionAuth: []
+  - apiToken: []
 responses:
   ServiceUnavailable:
     description: The service is currently unavailable.

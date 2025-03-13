@@ -59,3 +59,7 @@ class RandomBitmap:
 class RandomColor:
     def __init__(self, n: int = 10):
         self.n = n
+
+class RandomRaw:
+    def __init__(self, words: int = 10):
+        self.words = words

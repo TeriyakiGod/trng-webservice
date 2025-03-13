@@ -23,6 +23,7 @@ random_bitmap = RandomTool("rand_bitmap",rand.get_bitmap, serializers.RandomBitm
 random_color = RandomTool("rand_color",rand.get_colors, serializers.RandomColorSerializer, models.RandomColor, points.n_points)
 random_bitmap_gray = RandomTool("rand_bitmap_gray",rand.get_grayscale_bitmap, serializers.RandomBitmapSerializer, models.RandomBitmap, points.bitmap_points)
 random_bitmap_color = RandomTool("rand_bitmap_color",rand.get_rgb_noise_image, serializers.RandomBitmapSerializer, models.RandomBitmap, points.bitmap_points)
+random_raw = RandomTool("rand_raw", rand.random_raw, serializers.RandomRawSerializer, models.RandomRaw, points.word_points)
 
         
 

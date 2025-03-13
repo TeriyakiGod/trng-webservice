@@ -51,3 +51,7 @@ def bitmap_points(request: Request) -> int:
         return -2
     total_pixels = width * height
     return total_pixels
+
+def word_points(request: Request) -> int:
+    words = int(request.query_params.get('words', None))
+    return words * 32

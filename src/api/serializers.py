@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from . import UINT32_MAX
-from .models import BytesFormat, RandomInt, RandomFloat, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap, RandomColor
+from .models import BytesFormat, RandomInt, RandomFloat, RandomRaw, RandomString, RandomBytes, RandomSequence, RandomCoin, RandomDice, RandomLotto, RandomBitmap, RandomColor
        
         
 class RandomIntSerializer(serializers.Serializer):
@@ -204,4 +204,17 @@ class RandomColorSerializer(serializers.Serializer):
             raise serializers.ValidationError("n must be greater than 0")
         if data['n'] > 10000:
             raise serializers.ValidationError("n must be less than 10000")
+        return data
+    
+class RandomRawSerializer(serializers.Serializer):
+    words = serializers.IntegerField(label="Words", help_text="Number of random 32bit words to generate (1 to 12500000)")
+
+    def create(self, validated_data):
+        return RandomRaw(**validated_data)
+    
+    def validate(self, data):
+        if data['words'] < 1:
+            raise serializers.ValidationError("words must be greater than 0")
+        if data['words'] > 12500000:
+            raise serializers.ValidationError("words must be less than 12500000")
         return data

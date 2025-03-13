@@ -3,6 +3,22 @@ from PIL import Image
 from . import UINT32_MAX
 import numpy as np
 
+
+## @brief This function returns raw random bytes
+# @param words Number of words to return each word is 32 bits
+# @return Bytes object
+async def random_raw(words: int) -> bytearray:
+    result = bytearray()
+    for _ in range(words):
+        word = await rng()  # Await the next 32-bit word
+        # Extract 4 bytes from the 32-bit word
+        result.append((word >> 24) & 0xFF)  # Most significant byte (MSB)
+        result.append((word >> 16) & 0xFF)
+        result.append((word >> 8) & 0xFF)
+        result.append(word & 0xFF)          # Least significant byte (LSB)
+    return result
+
+
 ## @brief This function scales uint32 random numbers 
 # to an integer within a given range using 
 # Lemire's Method: Debiased Integer Multiplication. 

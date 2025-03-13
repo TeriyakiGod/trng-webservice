@@ -14,7 +14,6 @@ from django.contrib.auth import get_user_model, authenticate, logout, login
 from webservice.settings import ADMIN_USER_EMAIL
 
 
-# TODO: FIX registering
 class RegisterView(APIView):
     def get(self, request):
         form = User()
@@ -74,9 +73,15 @@ def verify_email(request):
     if user is not None:
         user.is_active = True
         user.save()
-        return Response({"message": "Email verified successfully"}, template_name="email-verified.html", status=200)
+        return Response(
+            {"message": "Email verified successfully"},
+            template_name="email-verified.html",
+            status=200,
+        )
     else:
-        return Response({"error": "Invalid token"}, template_name="400.html", status=400)
+        return Response(
+            {"error": "Invalid token"}, template_name="400.html", status=400
+        )
 
 
 class AccountView(APIView):
@@ -84,8 +89,6 @@ class AccountView(APIView):
         user: User = request.user
         if not user.is_authenticated:
             return redirect("/auth/login")
-        if not user.is_active:
-            return redirect("/auth/check-email/")
         else:
             profile = request.profile
             return Response({"profile": profile}, template_name="account.html")
@@ -95,15 +98,21 @@ class LoginView(APIView):
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
-            if user := authenticate(
+            user = authenticate(
                 request,
                 username=serializer.validated_data["username"],
                 password=serializer.validated_data["password"],
-            ):
-                login(request, user)
-                return redirect("/auth/account/")
+            )
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect("/auth/account/")
+                else:
+                    return redirect("/auth/check-email/")
         return Response(
-            {"serializer": serializer, "profile": request.profile, "invalid": True}, template_name="login.html", status=400
+            {"serializer": serializer, "profile": request.profile, "invalid": True},
+            template_name="login.html",
+            status=400,
         )
 
     def get(self, request):
@@ -119,6 +128,14 @@ class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response(template_name="logged_out.html")
+
+
+class ChangePasswordView(APIView):
+    def post(self, request):
+        raise NotImplementedError()
+
+    def get(self, request):
+        raise NotImplementedError()
 
 
 class ResetPasswordView(APIView):

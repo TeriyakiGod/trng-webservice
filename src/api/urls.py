@@ -77,6 +77,12 @@ urlpatterns = [
         {"tool": rand_tools.random_bitmap_color},
         name="rand_bitmap_color",
     ),
+    path(
+        "rand/raw",
+        views.rand_raw_view,
+        {"tool": rand_tools.random_raw},
+        name="rand_raw",
+    ),
     path("insufficient_points", views.insufficient_points, name="insufficient_points"),
     path("service_unavailable", views.service_unavailable, name="service_unavailable"),
     path(

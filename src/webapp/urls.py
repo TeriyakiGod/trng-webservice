@@ -18,6 +18,7 @@ urlpatterns = [
     path("rand-bitmap-form/", views.random_tool_form_view, name="rand_bitmap", kwargs={"tool": rand_tools.random_bitmap}),
     path('rand-bitmap-gray-form/', views.random_tool_form_view, name='rand_bitmap_gray', kwargs={"tool": rand_tools.random_bitmap_gray}),
     path('rand-bitmap-color-form/', views.random_tool_form_view, name='rand_bitmap_color', kwargs={"tool": rand_tools.random_bitmap_color}),
+    path('rand-raw-form/', views.random_tool_form_view, name='rand_raw', kwargs={"tool": rand_tools.random_raw}),
     path("rand-color-form/", views.random_tool_form_view, name="rand_color", kwargs={"tool": rand_tools.random_color}),
     path("privacy-policy/", views.template_view, name="privacy_policy", kwargs={"template": "privacy_policy.html"}),
     path("terms-of-service/", views.template_view, name="terms_of_service", kwargs={"template": "tos.html"}),
