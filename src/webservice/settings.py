@@ -14,12 +14,13 @@ SECRET_KEY = os.getenv('TRNG_WEBSERVICE_SECRET_KEY', "REPLACE_ME")
 DEBUG = os.getenv('TRNG_WEBSERVICE_DEBUG', 'False').lower() in ('true', '1', 't')
 
 if not DEBUG:
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_SECONDS = 63072000  # Two years
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    CSRF_TRUSTED_ORIGINS = os.getenv(['TRNG_WEBSERVICE_DOMAIN'], ['*'])
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', [os.getenv('TRNG_WEBSERVICE_DOMAIN', '*')])
 
 # Application definition
