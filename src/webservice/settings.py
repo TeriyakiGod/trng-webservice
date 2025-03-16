@@ -20,7 +20,7 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_SECONDS = 63072000  # Two years
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    CSRF_TRUSTED_ORIGINS = os.getenv(['TRNG_WEBSERVICE_DOMAIN'], ['*'])
+    CSRF_TRUSTED_ORIGINS = [os.getenv('TRNG_WEBSERVICE_DOMAIN', '*')]
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', [os.getenv('TRNG_WEBSERVICE_DOMAIN', '*')])
 
 # Application definition
