@@ -1,6 +1,6 @@
 from trng.interface import rng
 from PIL import Image
-from . import UINT32_MAX
+from decimal import Decimal, ROUND_DOWN
 import numpy as np
 
 
@@ -46,7 +46,8 @@ async def random_to_int(range: int) -> int:
 #  @param precision The precision of the generated float.
 #  @return A random float with the given precision.
 async def random_to_float(precision: int) -> float:
-    return round(await rng() / UINT32_MAX, precision)
+    number = await rng() * (2 ** -32)
+    return float(Decimal(str(number)).quantize(Decimal(f"1e-{precision}"), rounding=ROUND_DOWN))
 
 ## @brief This function scales uint32 random numbers to a random byte array of a given length.
 #  @param n The length of the byte array to generate.

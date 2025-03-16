@@ -1,5 +1,7 @@
 import random
 from django.conf import settings
+
+from api import UINT32_MAX
 from .consumers import TrngConsumer
 import asyncio
 
@@ -7,7 +9,7 @@ import asyncio
 #  @return A random integer in range from 0 to 4294967295.
 async def rng() -> int:
     if settings.DEBUG:
-        return random.randint(0, 4294967295)
+        return random.randint(0, UINT32_MAX)
     i=0
     # Wait for the buffer to fill if it's empty
     while not TrngConsumer.buffer:
